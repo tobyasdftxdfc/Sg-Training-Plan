@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SG Training">
+<title>SG Elite Training</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0d0d12;color:#eeeef5;overflow:hidden;height:100dvh;display:flex;flex-direction:column}
+body{padding-top:env(safe-area-inset-top,0px)}
+#hdr{background:#18181f;border-bottom:1px solid rgba(255,255,255,0.07);padding:12px 16px 10px;flex-shrink:0}
+#hdr h1{font-size:17px;font-weight:700}
+#hdr p{font-size:11px;color:#7a7a8c;margin-top:2px}
+.pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:#20202a;color:#7a7a8c;border:1px solid rgba(255,255,255,0.07)}
+.pill.o{background:rgba(255,140,0,0.15);color:#ffaa33;border-color:transparent}
+.pill.b{background:rgba(46,134,222,0.15);color:#6ab0f5;border-color:transparent}
+.pill.g{background:rgba(39,174,96,0.15);color:#55dd88;border-color:transparent}
+#nav{background:#18181f;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+#nav::-webkit-scrollbar{display:none}
+.nt{flex-shrink:0;font-size:12px;font-weight:600;padding:11px 15px;color:#7a7a8c;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.nt.on{color:#ff8c00;border-bottom-color:#ff8c00}
+#scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 20px)}
+.pnl{display:none}
+.pnl.on{display:block}
+.sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#7a7a8c;padding:16px 16px 7px}
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:0 16px 4px}
+.db{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:7px 3px;text-align:center;cursor:pointer}
+.db.on{background:rgba(255,140,0,0.15);border-color:#ff8c00}
+.db.on .dn{color:#ffaa33}
+.db.rest{background:#20202a}
+.dn{font-size:11px;font-weight:700}
+.ddot{width:6px;height:6px;border-radius:50%;margin:4px auto 2px}
+.dtp{font-size:8px;color:#7a7a8c;line-height:1.2}
+.mrow{display:flex;gap:6px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mrow::-webkit-scrollbar{display:none}
+.mc{flex-shrink:0;background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px 11px;text-align:center;min-width:68px}
+.mv{font-size:19px;font-weight:700;line-height:1}
+.ml{font-size:9px;color:#7a7a8c;text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+.bc{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin:0 16px 10px;overflow:hidden}
+.bh{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:#20202a;border-bottom:1px solid rgba(255,255,255,0.07);gap:8px}
+.bhl{display:flex;align-items:center;gap:7px}
+.bdg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.bl{background:rgba(46,134,222,0.15);color:#6ab0f5}
+.bg{background:rgba(39,174,96,0.15);color:#55dd88}
+.bo{background:rgba(255,140,0,0.15);color:#ffaa33}
+.br{background:rgba(231,76,60,0.15);color:#ff6655}
+.bp{background:rgba(142,68,173,0.15);color:#bb88dd}
+.bt2{background:rgba(22,160,133,0.15);color:#44ddbb}
+.btl{font-size:13px;font-weight:600}
+.bvl{font-size:11px;font-weight:600;color:#6ab0f5;white-space:nowrap}
+.er{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:1px solid rgba(255,255,255,0.07);gap:8px}
+.er:last-child{border-bottom:none}
+.en{font-size:13px;font-weight:500}
+.eno{font-size:11px;color:#7a7a8c;margin-top:2px}
+.es{font-size:11px;font-weight:600;color:#ffaa33;white-space:nowrap;text-align:right;min-width:65px}
+.rc{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin:16px;padding:24px 18px;text-align:center}
+.rt{font-size:17px;font-weight:700;margin-bottom:8px}
+.rtx{font-size:13px;color:#7a7a8c;line-height:1.6}
+.dbtns{display:flex;gap:5px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.dbtns::-webkit-scrollbar{display:none}
+.dbtn{flex-shrink:0;font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.07);background:#18181f;color:#7a7a8c;cursor:pointer;white-space:nowrap;-webkit-appearance:none}
+.dbtn.ar{background:rgba(231,76,60,0.15);color:#ff6655;border-color:transparent}
+.dbtn.ao{background:rgba(255,140,0,0.15);color:#ffaa33;border-color:transparent}
+.ci{font-size:11px;color:#7a7a8c;padding:4px 16px 8px;display:block}
+.ci strong{color:#eeeef5;font-weight:600}
+.cwrap{padding:0 16px 12px}
+.cwrap svg{border-radius:8px;display:block;width:100%;height:auto}
+.crt{fill:#2d5a1e}
+.cl{fill:none;stroke:#fff;stroke-width:0.8;opacity:0.6}
+.clb{stroke-width:1.2;opacity:0.85}
+.pr{display:flex;align-items:center;gap:10px;padding:4px 16px}
+.pl{font-size:12px;min-width:110px}
+.pt{flex:1;height:5px;background:#20202a;border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px}
+.pp{font-size:11px;color:#7a7a8c;min-width:28px;text-align:right}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 16px 10px}
+.macc{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:11px 8px;text-align:center}
+.malbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:#7a7a8c;margin-bottom:4px}
+.maval{font-size:24px;font-weight:700;line-height:1;margin-bottom:2px}
+.maunt{font-size:11px;color:#7a7a8c}
+.mbar{display:flex;height:7px;border-radius:4px;overflow:hidden;margin:0 16px 10px}
+.tlist{display:flex;flex-direction:column;gap:6px;padding:0 16px}
+.tr{display:flex;gap:9px;background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:9px 12px;align-items:flex-start}
+.tt{font-size:11px;font-weight:600;color:#6ab0f5;white-space:nowrap;min-width:56px;padding-top:1px}
+.td{font-size:12px;line-height:1.5}
+.note{font-size:12px;color:#7a7a8c;line-height:1.6;margin:0 16px 14px;background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 13px}
+</style>
+</head>
+<body>
+
+<div id="hdr">
+  <h1>Shooting Guard Elite Program</h1>
+  <p>12-week D1 development · 300 makes/day</p>
+  <div class="pills">
+    <span class="pill o">6'3.5" / 82kg</span>
+    <span class="pill b">Body recomposition</span>
+    <span class="pill g">300 makes/day</span>
+    <span class="pill">6 days/week</span>
+  </div>
+</div>
+
+<div id="nav">
+  <div class="nt on" onclick="goTab('sched',this)">Schedule</div>
+  <div class="nt" onclick="goTab('cond',this)">Conditioning</div>
+  <div class="nt" onclick="goTab('lift',this)">Lifting &amp; Vert</div>
+  <div class="nt" onclick="goTab('macros',this)">Macros</div>
+</div>
+
+<div id="scroll">
+
+<!-- SCHEDULE -->
+<div id="pnl-sched" class="pnl on">
+  <div class="sl">Select day</div>
+  <div class="dgrid">
+    <div class="db on" id="d-mon" onclick="goDay('mon')"><div class="dn">Mon</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Skill+Lower</div></div>
+    <div class="db" id="d-tue" onclick="goDay('tue')"><div class="dn">Tue</div><div class="ddot" style="background:#e67e22"></div><div class="dtp">Speed+Cond</div></div>
+    <div class="db" id="d-wed" onclick="goDay('wed')"><div class="dn">Wed</div><div class="ddot" style="background:#8e44ad"></div><div class="dtp">Upper+Handles</div></div>
+    <div class="db" id="d-thu" onclick="goDay('thu')"><div class="dn">Thu</div><div class="ddot" style="background:#27ae60"></div><div class="dtp">Vert+Skill</div></div>
+    <div class="db" id="d-fri" onclick="goDay('fri')"><div class="dn">Fri</div><div class="ddot" style="background:#e74c3c"></div><div class="dtp">Full+Cond</div></div>
+    <div class="db" id="d-sat" onclick="goDay('sat')"><div class="dn">Sat</div><div class="ddot" style="background:#16a085"></div><div class="dtp">Game Sim</div></div>
+    <div class="db rest" id="d-sun" onclick="goDay('sun')"><div class="dn">Sun</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+  </div>
+  <div id="daybody"></div>
+</div>
+
+<!-- CONDITIONING -->
+<div id="pnl-cond" class="pnl">
+  <div class="sl">Tuesday — speed day</div>
+  <div class="dbtns" id="tbtns"></div>
+  <span class="ci" id="tinfo"></span>
+  <div class="cwrap">
+    <svg id="tsvg" viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="200" rx="6" class="crt"/>
+      <rect x="1" y="1" width="358" height="198" rx="5" fill="none" stroke="#fff" stroke-width="1" opacity="0.8"/>
+      <line x1="180" y1="0" x2="180" y2="200" class="cl"/>
+      <circle cx="180" cy="100" r="22" class="cl"/>
+      <rect x="0" y="64" width="62" height="72" class="cl"/>
+      <path d="M62 74 A36 36 0 0 1 62 136" class="cl"/>
+      <circle cx="16" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
+      <rect x="298" y="64" width="62" height="72" class="cl"/>
+      <path d="M298 74 A36 36 0 0 0 298 136" class="cl"/>
+      <circle cx="344" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+      <g id="to"></g>
+    </svg>
+  </div>
+
+  <div class="sl">Friday — conditioning</div>
+  <div class="dbtns" id="fbtns"></div>
+  <span class="ci" id="finfo"></span>
+  <div class="cwrap">
+    <svg id="fsvg" viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="200" rx="6" class="crt"/>
+      <rect x="1" y="1" width="358" height="198" rx="5" fill="none" stroke="#fff" stroke-width="1" opacity="0.8"/>
+      <line x1="180" y1="0" x2="180" y2="200" class="cl"/>
+      <circle cx="180" cy="100" r="22" class="cl"/>
+      <rect x="0" y="64" width="62" height="72" class="cl"/>
+      <path d="M62 74 A36 36 0 0 1 62 136" class="cl"/>
+      <circle cx="16" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
+      <rect x="298" y="64" width="62" height="72" class="cl"/>
+      <path d="M298 74 A36 36 0 0 0 298 136" class="cl"/>
+      <circle cx="344" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
+      <line x1="0" y1="83" x2="62" y2="83" class="cl" opacity="0.35"/>
+      <line x1="0" y1="137" x2="62" y2="137" class="cl" opacity="0.35"/>
+      <line x1="298" y1="83" x2="360" y2="83" class="cl" opacity="0.35"/>
+      <line x1="298" y1="137" x2="360" y2="137" class="cl" opacity="0.35"/>
+      <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+      <g id="fo"></g>
+    </svg>
+  </div>
+
+  <div class="sl">Phase progression</div>
+  <div class="pr"><div class="pl">Wks 1–4: Base</div><div class="pt"><div class="pf" style="width:60%;background:#27ae60"></div></div><div class="pp">60%</div></div>
+  <div class="pr" style="margin-top:5px"><div class="pl">Wks 5–8: Build</div><div class="pt"><div class="pf" style="width:80%;background:#e67e22"></div></div><div class="pp">80%</div></div>
+  <div class="pr" style="margin-top:5px;margin-bottom:16px"><div class="pl">Wks 9–12: Peak</div><div class="pt"><div class="pf" style="width:96%;background:#e74c3c"></div></div><div class="pp">96%</div></div>
+</div>
+
+<!-- LIFTING -->
+<div id="pnl-lift" class="pnl">
+  <div class="sl">Lower body — Mon &amp; Thu</div>
+  <div class="bc">
+    <div class="bh"><div class="bhl"><span class="bdg br">Power</span><span class="btl">Lower power block</span></div></div>
+    <div class="er"><div><div class="en">Back squat</div><div class="eno">Wk 1–4: 70% · Wk 5–8: 80% · Wk 9–12: 85%+</div></div><div class="es">4 × 5</div></div>
+    <div class="er"><div><div class="en">Romanian deadlift</div><div class="eno">Controlled eccentric, hamstring focus</div></div><div class="es">3 × 8</div></div>
+    <div class="er"><div><div class="en">Trap bar deadlift</div><div class="eno">Explosive concentric, neutral spine</div></div><div class="es">4 × 4</div></div>
+    <div class="er"><div><div class="en">Bulgarian split squat</div><div class="eno">Single leg strength, posterior chain</div></div><div class="es">3 × 8e</div></div>
+    <div class="er"><div><div class="en">Glute-ham raise</div><div class="eno">3s eccentric, full range</div></div><div class="es">3 × 6</div></div>
+    <div class="er"><div><div class="en">Calf raises (seated + standing)</div><div class="eno">Ankle stiffness for vert</div></div><div class="es">4 × 15</div></div>
+  </div>
+  <div class="sl">Vert / plyo — Thursday</div>
+  <div class="bc">
+    <div class="bh"><div class="bhl"><span class="bdg bo">Plyo</span><span class="btl">Shock &amp; reactive jump protocol</span></div></div>
+    <div class="er"><div><div class="en">Depth drops (shock method)</div><div class="eno">~45cm box, absorb only — no jump after</div></div><div class="es">4 × 5</div></div>
+    <div class="er"><div><div class="en">Depth jump → max vert</div><div class="eno">~45cm box, step off, immediate explosion</div></div><div class="es">5 × 5</div></div>
+    <div class="er"><div><div class="en">Single-leg bounding</div><div class="eno">Alternate legs, 20m runs</div></div><div class="es">5 × 20m</div></div>
+    <div class="er"><div><div class="en">Continuous broad jump</div><div class="eno">Land and immediately jump forward</div></div><div class="es">4 × 5</div></div>
+    <div class="er"><div><div class="en">Ankle stiffness hops</div><div class="eno">Minimal knee bend, rapid contact</div></div><div class="es">4 × 20</div></div>
+    <div class="er"><div><div class="en">Rim touches</div><div class="eno">Measure reach weekly, 10 consecutive</div></div><div class="es">3 × 10</div></div>
+  </div>
+  <div class="sl">Upper body — Wed &amp; Fri</div>
+  <div class="bc">
+    <div class="bh"><div class="bhl"><span class="bdg bl">Strength</span><span class="btl">Upper strength + shoulder health</span></div></div>
+    <div class="er"><div><div class="en">Bench press</div><div class="eno">Controlled, full range of motion</div></div><div class="es">4 × 6</div></div>
+    <div class="er"><div><div class="en">Weighted pull-ups</div><div class="eno">+5–10kg after week 4</div></div><div class="es">4 × 6</div></div>
+    <div class="er"><div><div class="en">DB incline press</div><div class="eno">Upper chest, shoulder stabiliser</div></div><div class="es">3 × 10</div></div>
+    <div class="er"><div><div class="en">Single-arm DB row</div><div class="eno">Heavy, full retraction</div></div><div class="es">3 × 10e</div></div>
+    <div class="er"><div><div class="en">Landmine press</div><div class="eno">Shoulder-safe pressing pattern</div></div><div class="es">3 × 12</div></div>
+    <div class="er"><div><div class="en">Band pull-aparts + face pulls</div><div class="eno">Rotator cuff health — non-negotiable</div></div><div class="es">3 × 15</div></div>
+  </div>
+  <div style="height:16px"></div>
+</div>
+
+<!-- MACROS -->
+<div id="pnl-macros" class="pnl">
+  <div class="sl">Daily targets</div>
+  <div class="mgrid">
+    <div class="macc"><div class="malbl">Calories</div><div class="maval">2,950</div><div class="maunt">kcal/day</div></div>
+    <div class="macc"><div class="malbl">Protein</div><div class="maval" style="color:#ff6655">195g</div><div class="maunt">2.4g/kg</div></div>
+    <div class="macc"><div class="malbl">Carbs</div><div class="maval" style="color:#6ab0f5">355g</div><div class="maunt">fuel</div></div>
+  </div>
+  <div class="mbar">
+    <div style="flex:26;background:rgba(231,76,60,0.3)"></div>
+    <div style="flex:48;background:rgba(46,134,222,0.3)"></div>
+    <div style="flex:26;background:rgba(255,140,0,0.3)"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:0 16px 14px;font-size:10px;color:#7a7a8c"><span>Protein 26%</span><span>Carbs 48%</span><span>Fat 26% · 85g</span></div>
+  <div class="sl">Meal timing</div>
+  <div class="tlist">
+    <div class="tr"><div class="tt">7:00 AM</div><div class="td"><strong>Wake-up:</strong> 4 eggs + oats + banana + coffee — ~650 kcal</div></div>
+    <div class="tr"><div class="tt">10:00 AM</div><div class="td"><strong>Pre-workout:</strong> Greek yogurt + berries + honey — ~300 kcal</div></div>
+    <div class="tr"><div class="tt">12:30 PM</div><div class="td"><strong>Post-workout:</strong> 40g whey + rice cakes + almond butter — ~450 kcal</div></div>
+    <div class="tr"><div class="tt">3:00 PM</div><div class="td"><strong>Lunch:</strong> Chicken 200g + brown rice + veg + olive oil — ~750 kcal</div></div>
+    <div class="tr"><div class="tt">6:00 PM</div><div class="td"><strong>Dinner:</strong> Salmon or lean beef + sweet potato + greens — ~650 kcal</div></div>
+    <div class="tr"><div class="tt">9:00 PM</div><div class="td"><strong>Overnight:</strong> Cottage cheese or casein — 30g protein, slow release</div></div>
+  </div>
+  <div class="sl">Recomposition rules</div>
+  <div class="note">Target <strong style="color:#eeeef5">0.5–0.75kg change/week</strong>. Hard days (Mon/Thu/Fri) add 50–80g carbs. Rest day ~2,400 kcal. Hydration: <strong style="color:#eeeef5">4L+ on court days</strong>. Creatine 5g daily. Sleep 8–9 hrs. Track body comp monthly — not daily weight.</div>
+  <div style="height:16px"></div>
+</div>
+
+</div><!-- /scroll -->
+
+<script>
+// ===== TAB & DAY NAV =====
+function goTab(id, el) {
+  var ps = document.querySelectorAll('.pnl');
+  for (var i=0; i<ps.length; i++) ps[i].classList.remove('on');
+  var ns = document.querySelectorAll('.nt');
+  for (var i=0; i<ns.length; i++) ns[i].classList.remove('on');
+  document.getElementById('pnl-'+id).classList.add('on');
+  el.classList.add('on');
+  document.getElementById('scroll').scrollTop = 0;
+}
+
+// ===== SCHEDULE DATA =====
+var SD = {
+  mon: {
+    makes: [{v:120,l:'3pt',c:'#55dd88'},{v:100,l:'mid-range',c:'#6ab0f5'},{v:50,l:'finishing',c:'#ffaa33'},{v:30,l:'FTs',c:'#ff6655'}],
+    blocks: [
+      {t:'Skill — catch & shoot',cls:'bg',lbl:'Shooting',vol:'300 makes',rows:[
+        ['Corner 3 L&R catch & shoot','Feet set on catch, no dribble','20 each'],
+        ['Wing 3 L&R catch & shoot','Off pin-down curl movement','20 each'],
+        ['Left elbow mid-range','Catch & shoot, perfect footwork','20 makes'],
+        ['Right elbow mid-range','Catch & shoot, perfect footwork','20 makes'],
+        ['Left-hand floater (paint)','Soft touch, high arc over big','15 makes'],
+        ['Right-hand floater (paint)','One-two step, sell the drive','15 makes'],
+        ['Standard layup L&R','High glass, correct footwork','10 each'],
+        ['Free throws — fresh legs','Groove the routine','30 makes']
+      ]},
+      {t:'Ball handling — stationary',cls:'bl',lbl:'Handles',vol:'Timed',rows:[
+        ['Two-ball pound dribbles','Simultaneous then alternating','3 x 45s'],
+        ['Figure-8 between legs','Controlled then max speed','3 x 30s'],
+        ['Spider dribbles','Front and back','3 x 30s']
+      ]},
+      {t:'Lower body lift',cls:'br',lbl:'Lift',vol:'',rows:[
+        ['Back squat','70-85% 1RM by phase','4 x 5'],
+        ['Romanian deadlift','Controlled eccentric','3 x 8'],
+        ['Glute-ham raise','3s lowering','3 x 6'],
+        ['Calf raises','Seated + standing','4 x 15']
+      ]}
+    ]
+  },
+  tue: {
+    makes: [{v:60,l:'3pt',c:'#55dd88'},{v:80,l:'pull-up mid',c:'#6ab0f5'},{v:100,l:'off-dribble',c:'#ffaa33'},{v:30,l:'finishing',c:'#ff6655'},{v:30,l:'FTs',c:'#888'}],
+    blocks: [
+      {t:'Skill — off-dribble creation',cls:'bo',lbl:'Creation',vol:'300 makes',rows:[
+        ['Jab to pull-up mid-range','Sell the jab, quick gather','20 each side'],
+        ['Jab to crossover to pull-up','One dribble, fast decision','20 each side'],
+        ['DHO pull-up 3 L&R wing','One dribble off the hand-off','15 each'],
+        ['Step-back 3 both sides','Hard gather, load the step-back','15 each side'],
+        ['Fadeaway off one dribble both','Load back foot, balanced fade','15 each'],
+        ['Euro step finish both sides','Two-dribble attack, big step','10 each'],
+        ['Free throws after sprints','Simulate fatigue pressure','30 makes']
+      ]},
+      {t:'Speed development',cls:'br',lbl:'Speed',vol:'~2,800m',rows:[
+        ['Dynamic warm-up + A/B skips','Jog 2x150m + drills','~400m'],
+        ['9m resisted sprint (sled)','Drive phase, heavy resistance','8 x 9m'],
+        ['18m acceleration sprint','Standing start, max effort','8 x 18m'],
+        ['T-drill court cones','~10m+5m+10m+5m, timed','8 x timed'],
+        ['5-10-5 pro agility shuttle','4.5m each direction, explosive COD','8 x timed'],
+        ['Lane shuffle 18m closeout','Shuffle paint width then burst','8 x each'],
+        ['Zigzag cone weave full court','Cones every 5m down 28m','6 x 28m'],
+        ['Court shuttle sprint retreat','28m sprint + 28m backpedal','6 x 56m']
+      ]}
+    ]
+  },
+  wed: {
+    makes: [{v:90,l:'3pt',c:'#55dd88'},{v:60,l:'mid-range',c:'#6ab0f5'},{v:80,l:'off screens',c:'#ffaa33'},{v:40,l:'finishing',c:'#ff6655'},{v:30,l:'FTs',c:'#888'}],
+    blocks: [
+      {t:'Skill — off-screen & curl',cls:'bp',lbl:'Off screens',vol:'300 makes',rows:[
+        ['Curl off screen to 3','Momentum into shot, do not fade','20 each side'],
+        ['Flare off screen to 3','Push off screen hard, elevate','20 each side'],
+        ['Curl off screen to mid-range','Simulate pin-down, elbow J','20 each side'],
+        ['DHO hand-off to floater','Use the screen as cover','15 each side'],
+        ['Pro hop both sides','Two feet gather, power through','10 each'],
+        ['Reverse layup both sides','Use rim as shield on drives','10 each'],
+        ['Free throws','Mid-session routine check','30 makes']
+      ]},
+      {t:'Ball handling — attack moves',cls:'bl',lbl:'Handles',vol:'Timed',rows:[
+        ['Cone weave crossover/hesitation/in-out','Game-speed combos','10 min'],
+        ['Behind-the-back pound','Low dribble, tight control','3 x 30s'],
+        ['Full-court dribble series','Game-speed both ends','10 min']
+      ]},
+      {t:'Upper body lift',cls:'bl',lbl:'Lift',vol:'',rows:[
+        ['Bench press','Full range, controlled','4 x 6'],
+        ['Weighted pull-ups','+5-10kg after week 4','4 x 6'],
+        ['DB incline press','Upper chest emphasis','3 x 10'],
+        ['Single-arm DB row','Heavy, full retraction','3 x 10e'],
+        ['Band pull-aparts + face pulls','Shoulder health — mandatory','3 x 15']
+      ]}
+    ]
+  },
+  thu: {
+    makes: [{v:120,l:'3pt',c:'#55dd88'},{v:80,l:'contested',c:'#6ab0f5'},{v:70,l:'pull-up/step-back',c:'#ffaa33'},{v:30,l:'FTs',c:'#ff6655'}],
+    blocks: [
+      {t:'Skill — contested & pressure',cls:'br',lbl:'Contested',vol:'300 makes',rows:[
+        ['Contested 3 closeout drill','Partner rushes, shoot the 3','30 each side'],
+        ['Step-back 3 both sides','One dribble, load the step-back','20 each side'],
+        ['Pull-up 3 off hesitation','Hesitate then burst, pull up at logo','15 each side'],
+        ['Contested mid-range elbow','Hand in face, hold the form','20 each side'],
+        ['Free throws after plyo block','Maximum fatigue, late game sim','30 makes']
+      ]},
+      {t:'Vert / plyometric block',cls:'bo',lbl:'Plyo',vol:'',rows:[
+        ['Depth drops (shock method)','~45cm box, absorb only','4 x 5'],
+        ['Depth jump to max vert','~45cm box, step off, immediate','5 x 5'],
+        ['Single-leg bounding','Alternate legs, 20m runs','5 x 20m'],
+        ['Continuous broad jump','Land and immediately jump forward','4 x 5'],
+        ['Ankle stiffness hops','Minimal knee bend, rapid contact','4 x 20'],
+        ['Rim touches','Measure reach weekly','3 x 10']
+      ]},
+      {t:'Lower body accessory',cls:'br',lbl:'Lift',vol:'',rows:[
+        ['Trap bar deadlift','Explosive concentric','4 x 4'],
+        ['Bulgarian split squat','Single leg power','3 x 8e']
+      ]}
+    ]
+  },
+  fri: {
+    makes: [{v:80,l:'mid-range',c:'#6ab0f5'},{v:80,l:'3pt',c:'#55dd88'},{v:60,l:'finishing',c:'#ffaa33'},{v:50,l:'footwork',c:'#ff6655'},{v:30,l:'FTs',c:'#888'}],
+    blocks: [
+      {t:'Skill — footwork & finishing',cls:'bo',lbl:'Footwork',vol:'300 makes',rows:[
+        ['Jab-step crossover to layup','Sell jab, burst on cross','15 each side'],
+        ['Euro step finish both sides','Full speed, both hands','15 each side'],
+        ['Pro hop through contact','Use your body, not just ball','10 each side'],
+        ['Reverse layup both sides','Use rim as shield on drives','10 each side'],
+        ['Spot-up 3 — 5 spots around arc','8 makes per spot','40 makes'],
+        ['Pull-up mid off 2 dribbles','Realistic game rhythm','20 each side'],
+        ['Free throws end of session','High fatigue, locked-in routine','30 makes']
+      ]},
+      {t:'Ball handling — combos',cls:'bl',lbl:'Handles',vol:'Timed',rows:[
+        ['Between-legs behind-back combo','Game-speed, no cones','5 x each side'],
+        ['In-and-out crossover combo','Extend first step on the cross','5 x each side']
+      ]},
+      {t:'Full body lift',cls:'br',lbl:'Lift',vol:'',rows:[
+        ['Trap bar deadlift','Explosive concentric','4 x 4'],
+        ['Landmine press','Shoulder-safe pressing','3 x 12'],
+        ['Barbell row','Back thickness, heavy','4 x 6'],
+        ['Core circuit','Pallof press, dead bugs, anti-rotation','3 rounds']
+      ]},
+      {t:'Game conditioning',cls:'bo',lbl:'Cond',vol:'~3,600m',rows:[
+        ['17s baseline-to-baseline','17 trips in 60s (476m/set), 30s rest','8 sets'],
+        ['Suicide runs','Baseline to 4.5m to 14m to 28m (~95m)','8 x ~95m'],
+        ['3-on-3 half-court live','High intensity, 90s rest between','6 x 4 min'],
+        ['Full-court 1v1','56m round trip, game moves only','14 possessions'],
+        ['Sprint finisher full court','28m sprint, walk back','10 x 28m'],
+        ['Half-court burst back-to-back','14m down + 14m back, 4 rounds','4 x 56m']
+      ]}
+    ]
+  },
+  sat: {
+    makes: [{v:100,l:'game shots',c:'#55dd88'},{v:80,l:'spot-up 3s',c:'#6ab0f5'},{v:60,l:'finishing',c:'#ffaa33'},{v:30,l:'FTs',c:'#ff6655'}],
+    blocks: [
+      {t:'Skill — game simulation',cls:'bt2',lbl:'Game sim',vol:'300 makes',rows:[
+        ['5-on-5 scrimmage shots','All shots must be real game looks','~100 in play'],
+        ['Post-game spot-up 3s 5 spots','16 makes per spot around arc','80 makes'],
+        ['Post-game finishing','Layup package both hands game speed','60 makes'],
+        ['Cool-down free throws','2 at a time as in real games','30 makes']
+      ]},
+      {t:'5-on-5 live scrimmage',cls:'bt2',lbl:'Live',vol:'~4,000m+',rows:[
+        ['Full-game scrimmage','Full game speed, no holding back','4 x 8 min'],
+        ['Off-ball movement','Cuts, screens, spacing reads','Throughout'],
+        ['Post-scrimmage sprint series','28m full court x 8, walk back','8 x 28m']
+      ]}
+    ]
+  },
+  sun: {rest:true}
+};
+
+function goDay(k) {
+  var dbs = document.querySelectorAll('.db');
+  for (var i=0;i<dbs.length;i++) dbs[i].classList.remove('on');
+  document.getElementById('d-'+k).classList.add('on');
+  var db = document.getElementById('daybody');
+  var d = SD[k];
+  if (d.rest) {
+    db.innerHTML = '<div class="rc"><div class="rt">Full recovery day</div><div class="rtx">No structured training. 8-9 hours sleep, light walking only, 4L hydration, foam rolling and stretching. This is where adaptation happens.</div></div>';
+    return;
+  }
+  var h = '';
+  if (d.makes) {
+    h += '<div class="mrow">';
+    for (var i=0;i<d.makes.length;i++) {
+      var m = d.makes[i];
+      h += '<div class="mc"><div class="mv" style="color:'+m.c+'">'+m.v+'</div><div class="ml">'+m.l+'</div></div>';
+    }
+    h += '</div>';
+  }
+  for (var i=0;i<d.blocks.length;i++) {
+    var bl = d.blocks[i];
+    h += '<div class="bc"><div class="bh"><div class="bhl"><span class="bdg '+bl.cls+'">'+bl.lbl+'</span><span class="btl">'+bl.t+'</span></div>'+(bl.vol?'<span class="bvl">'+bl.vol+'</span>':'')+'</div>';
+    for (var j=0;j<bl.rows.length;j++) {
+      var r = bl.rows[j];
+      h += '<div class="er"><div><div class="en">'+r[0]+'</div><div class="eno">'+r[1]+'</div></div><div class="es">'+r[2]+'</div></div>';
+    }
+    h += '</div>';
+  }
+  db.innerHTML = h;
+}
+goDay('mon');
+
+// ===== COURT DRILLS =====
+// SVG strings for each drill - pre-built, no dynamic creation
+var TD = {
+  'Resisted 9m': {
+    info: 'Dist: 9m/rep | Vol: 8 x 9m | Focus: Drive phase, max force',
+    svg: '<line x1="10" y1="25" x2="100" y2="25" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="25" r="4" fill="#fff" opacity="0.9"/><circle cx="100" cy="25" r="4" fill="#ffcc00" opacity="0.9"/><line x1="100" y1="25" x2="10" y2="25" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><text x="55" y="16" fill="#ffcc00" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle">9m</text><line x1="10" y1="70" x2="100" y2="70" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="70" r="4" fill="#fff" opacity="0.9"/><circle cx="100" cy="70" r="4" fill="#ffcc00" opacity="0.9"/><line x1="100" y1="70" x2="10" y2="70" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="10" y1="115" x2="100" y2="115" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="115" r="4" fill="#fff" opacity="0.9"/><circle cx="100" cy="115" r="4" fill="#ffcc00" opacity="0.9"/><line x1="100" y1="115" x2="10" y2="115" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="10" y1="160" x2="100" y2="160" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="160" r="4" fill="#fff" opacity="0.9"/><circle cx="100" cy="160" r="4" fill="#ffcc00" opacity="0.9"/><line x1="100" y1="160" x2="10" y2="160" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><text x="180" y="192" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">Walk back between reps — full recovery</text>'
+  },
+  'Accel 18m': {
+    info: 'Dist: 18m/rep | Vol: 8 x 18m | Focus: Standing start, max velocity',
+    svg: '<line x1="10" y1="25" x2="196" y2="25" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="25" r="4" fill="#fff" opacity="0.9"/><circle cx="196" cy="25" r="4" fill="#ffcc00" opacity="0.9"/><text x="103" y="16" fill="#ffcc00" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle">18m</text><line x1="196" y1="25" x2="10" y2="25" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="10" y1="70" x2="196" y2="70" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="70" r="4" fill="#fff" opacity="0.9"/><circle cx="196" cy="70" r="4" fill="#ffcc00" opacity="0.9"/><line x1="196" y1="70" x2="10" y2="70" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="10" y1="115" x2="196" y2="115" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="115" r="4" fill="#fff" opacity="0.9"/><line x1="196" y1="115" x2="10" y2="115" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="10" y1="160" x2="196" y2="160" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="10" cy="160" r="4" fill="#fff" opacity="0.9"/><line x1="196" y1="160" x2="10" y2="160" stroke="#44aaff" stroke-width="1.2" stroke-dasharray="4 3"/><text x="180" y="192" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">Max effort — full recovery each rep</text>'
+  },
+  'T-Drill': {
+    info: 'Dist: ~30m/rep | Vol: 8 x timed | Focus: Change of direction',
+    svg: '<circle cx="160" cy="175" r="5" fill="#fff" opacity="0.9"/><circle cx="160" cy="55" r="5" fill="#ffcc00" opacity="0.9"/><circle cx="80" cy="55" r="5" fill="#ffcc00" opacity="0.9"/><circle cx="240" cy="55" r="5" fill="#ffcc00" opacity="0.9"/><line x1="160" y1="175" x2="160" y2="60" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><line x1="160" y1="55" x2="85" y2="55" stroke="#ff4444" stroke-width="2" stroke-linecap="round"/><line x1="80" y1="55" x2="235" y2="55" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><line x1="240" y1="55" x2="165" y2="55" stroke="#44aaff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr)"/><line x1="160" y1="55" x2="160" y2="170" stroke="#44aaff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr)"/><text x="160" y="190" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.8">Start</text><text x="180" y="192" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0"> </text><text x="160" y="40" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.6">Shuffle laterally — do not cross feet</text>'
+  },
+  '5-10-5': {
+    info: 'Dist: ~13.5m/rep | Vol: 8 x timed | Focus: First step quickness',
+    svg: '<circle cx="180" cy="100" r="5" fill="#fff" opacity="0.9"/><circle cx="100" cy="100" r="5" fill="#ffcc00" opacity="0.9"/><circle cx="260" cy="100" r="5" fill="#ffcc00" opacity="0.9"/><line x1="180" y1="100" x2="105" y2="100" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><path d="M100 86 Q180 44 260 86" fill="none" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><path d="M260 114 Q180 156 180 114" fill="none" stroke="#44aaff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr)"/><text x="140" y="114" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">4.5m</text><text x="180" y="36" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">9m across</text><text x="180" y="192" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">Touch line at each cone — planted foot only</text>'
+  },
+  'Closeout': {
+    info: 'Dist: ~23m/rep | Vol: 8 x each direction | Focus: Defensive burst',
+    svg: '<rect x="2" y="64" width="60" height="72" fill="rgba(255,200,0,0.08)" stroke="#ffcc00" stroke-width="0.7" stroke-dasharray="3 2" opacity="0.8"/><circle cx="22" cy="130" r="5" fill="#fff" opacity="0.9"/><line x1="22" y1="130" x2="58" y2="104" stroke="#ff4444" stroke-width="1.8"/><line x1="58" y1="104" x2="22" y2="88" stroke="#ff4444" stroke-width="1.8"/><line x1="22" y1="88" x2="62" y2="73" stroke="#ff4444" stroke-width="1.8"/><line x1="62" y1="73" x2="252" y2="73" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="252" cy="73" r="5" fill="#ffcc00" opacity="0.9"/><text x="157" y="63" fill="#ff4444" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle">Burst 18m to closeout</text><text x="180" y="192" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">Shuffle full paint width — explode out</text>'
+  },
+  'Zigzag': {
+    info: 'Dist: 28m/rep | Vol: 6 x 28m | Focus: COD at speed',
+    svg: '<polygon points="16,16 11,28 21,28" fill="#ffcc00" opacity="0.9"/><polygon points="74,175 69,163 79,163" fill="#ffcc00" opacity="0.9"/><polygon points="133,16 128,28 138,28" fill="#ffcc00" opacity="0.9"/><polygon points="191,175 186,163 196,163" fill="#ffcc00" opacity="0.9"/><polygon points="250,16 245,28 255,28" fill="#ffcc00" opacity="0.9"/><polygon points="308,175 303,163 313,163" fill="#ffcc00" opacity="0.9"/><polygon points="345,100 340,112 350,112" fill="#ffcc00" opacity="0.9"/><line x1="16" y1="28" x2="74" y2="163" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><line x1="74" y1="163" x2="133" y2="28" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><line x1="133" y1="28" x2="191" y2="163" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><line x1="191" y1="163" x2="250" y2="28" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><line x1="250" y1="28" x2="308" y2="163" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><line x1="308" y1="163" x2="345" y2="112" stroke="#ff4444" stroke-width="2" stroke-linecap="round" marker-end="url(#arr)"/><circle cx="16" cy="16" r="4" fill="#fff" opacity="0.9"/><text x="16" y="8" fill="#fff" font-size="8" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.9">Start</text><text x="180" y="196" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">Attack every cone at full speed — 5m gaps</text>'
+  },
+  'Shuttle': {
+    info: 'Dist: 56m/rep | Vol: 6 x 56m | Focus: Aerobic speed endurance',
+    svg: '<circle cx="10" cy="80" r="4" fill="#fff" opacity="0.9"/><circle cx="350" cy="80" r="4" fill="#ffcc00" opacity="0.9"/><line x1="14" y1="80" x2="346" y2="80" stroke="#ff4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr)"/><text x="180" y="70" fill="#ff4444" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle">Sprint 28m</text><line x1="346" y1="120" x2="14" y2="120" stroke="#44aaff" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arr)"/><text x="180" y="140" fill="#44aaff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle">Backpedal 28m</text><text x="180" y="192" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">No rest between sprint and backpedal</text>'
+  }
+};
+
+var FD = {
+  '17s Drill': {
+    info: 'Vol: 8 sets | 476m per set (17x28m) | Target: Sub-60s',
+    svg: (function(){var s='';for(var i=0;i<17;i++){var y=5+i*11.4,x1=i%2===0?4:356,x2=i%2===0?356:4;s+='<line x1="'+x1+'" y1="'+y+'" x2="'+x2+'" y2="'+y+'" stroke="'+(i<9?'#ff8800':'#ffaa55')+'" stroke-width="1.8" marker-end="url(#arr2)"/>';}s+='<text x="180" y="196" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">17 trips x 28m = 476m. Touch baseline each time.</text>';return s;})()
+  },
+  'Suicides': {
+    info: 'Vol: 8 reps | ~95m per rep | 30-45s rest between',
+    svg: '<circle cx="46" cy="188" r="4" fill="#fff" opacity="0.9"/><circle cx="46" cy="88" r="4" fill="#ffcc00" opacity="0.9"/><circle cx="46" cy="128" r="4" fill="#ffcc00" opacity="0.9"/><circle cx="46" cy="12" r="4" fill="#ffcc00" opacity="0.9"/><text x="56" y="191" fill="#fff" font-size="9" font-family="-apple-system,sans-serif">Start (baseline)</text><text x="56" y="91" fill="#ffcc00" font-size="9" font-family="-apple-system,sans-serif">4.5m</text><text x="56" y="131" fill="#ffcc00" font-size="9" font-family="-apple-system,sans-serif">14m (free throw line)</text><text x="56" y="15" fill="#ffcc00" font-size="9" font-family="-apple-system,sans-serif">28m opposite baseline</text><line x1="40" y1="188" x2="40" y2="92" stroke="#ff8800" stroke-width="1.8" marker-end="url(#arr2)"/><line x1="34" y1="88" x2="34" y2="184" stroke="#44aaff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr2)"/><line x1="28" y1="188" x2="28" y2="132" stroke="#ff8800" stroke-width="1.8" marker-end="url(#arr2)"/><line x1="22" y1="128" x2="22" y2="184" stroke="#44aaff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr2)"/><line x1="16" y1="188" x2="16" y2="16" stroke="#ff8800" stroke-width="1.8" marker-end="url(#arr2)"/><line x1="10" y1="12" x2="10" y2="184" stroke="#44aaff" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr2)"/>'
+  },
+  '3-on-3': {
+    info: 'Vol: 6 x 4 min | 90s rest between | High intensity reads',
+    svg: '<rect x="2" y="2" width="178" height="196" fill="rgba(255,140,0,0.08)" stroke="#ff8800" stroke-width="1" stroke-dasharray="5 3" rx="3" opacity="0.8"/><circle cx="65" cy="90" r="10" fill="#ff8800" opacity="0.85"/><text x="65" y="94" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">O</text><circle cx="78" cy="148" r="10" fill="#ff8800" opacity="0.85"/><text x="78" y="152" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">O</text><circle cx="40" cy="120" r="10" fill="#ff8800" opacity="0.85"/><text x="40" y="124" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">O</text><circle cx="128" cy="80" r="10" fill="#2980b9" opacity="0.85"/><text x="128" y="84" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">D</text><circle cx="142" cy="140" r="10" fill="#2980b9" opacity="0.85"/><text x="142" y="144" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">D</text><circle cx="102" cy="112" r="10" fill="#2980b9" opacity="0.85"/><text x="102" y="116" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">D</text><text x="270" y="100" fill="#fff" font-size="10" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.3">Rest</text><text x="270" y="115" fill="#fff" font-size="10" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.3">zone</text>'
+  },
+  '1v1 Full Court': {
+    info: 'Vol: 14 possessions | 56m round trip | Attack every rep',
+    svg: '<circle cx="28" cy="100" r="12" fill="#ff8800" opacity="0.85"/><text x="28" y="104" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">O</text><circle cx="68" cy="100" r="12" fill="#2980b9" opacity="0.8"/><text x="68" y="104" fill="#fff" font-size="11" font-family="-apple-system,sans-serif" text-anchor="middle">D</text><path d="M40 100 Q180 50 312 46" fill="none" stroke="#ff8800" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arr2)"/><path d="M312 46 Q180 155 28 100" fill="none" stroke="#44aaff" stroke-width="1.8" stroke-dasharray="5 3"/><circle cx="342" cy="46" r="10" fill="none" stroke="#ffcc00" stroke-width="1.5" opacity="0.8"/><text x="342" y="50" fill="#ffcc00" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle">Rim</text><text x="180" y="192" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">56m round trip — game speed every possession</text>'
+  },
+  'Finisher': {
+    info: 'Vol: 10 x 28m | Walk back between | Max effort every rep',
+    svg: (function(){var s='';for(var i=0;i<10;i++){var y=12+i*18;s+='<circle cx="4" cy="'+y+'" r="3" fill="#fff" opacity="0.7"/><line x1="7" y1="'+y+'" x2="353" y2="'+y+'" stroke="'+(i<5?'#ff8800':'#ff4444')+'" stroke-width="2" stroke-linecap="round" marker-end="url(#arr2)"/><text x="357" y="'+(y+3)+'" fill="'+(i<5?'#ff8800':'#ff4444')+'" font-size="8" font-family="-apple-system,sans-serif">'+(i+1)+'</text>';}s+='<text x="180" y="196" fill="#fff" font-size="9" font-family="-apple-system,sans-serif" text-anchor="middle" opacity="0.7">Reps 6-10 are the real test</text>';return s;})()
+  }
+};
+
+function setupDrills(containerId, infoId, svgOverlayId, drillsObj, activeClass) {
+  var c = document.getElementById(containerId);
+  c.innerHTML = '';
+  var keys = Object.keys(drillsObj);
+  for (var i=0; i<keys.length; i++) {
+    (function(k, idx) {
+      var b = document.createElement('button');
+      b.className = 'dbtn' + (idx===0?' '+activeClass:'');
+      b.textContent = k;
+      b.onclick = function() {
+        var btns = c.querySelectorAll('.dbtn');
+        for (var j=0;j<btns.length;j++) btns[j].className='dbtn';
+        b.className = 'dbtn ' + activeClass;
+        document.getElementById(infoId).textContent = drillsObj[k].info;
+        document.getElementById(svgOverlayId).innerHTML = drillsObj[k].svg;
+      };
+      c.appendChild(b);
+    })(keys[i], i);
+  }
+  // Set first drill active
+  document.getElementById(infoId).textContent = drillsObj[keys[0]].info;
+  document.getElementById(svgOverlayId).innerHTML = drillsObj[keys[0]].svg;
+}
+
+setupDrills('tbtns','tinfo','to', TD, 'ar');
+setupDrills('fbtns','finfo','fo', FD, 'ao');
+</script>
+</body>
+</html>
