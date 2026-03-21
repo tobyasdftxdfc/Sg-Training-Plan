@@ -129,89 +129,32 @@ body{padding-top:env(safe-area-inset-top,0px)}
 
 <!-- CONDITIONING -->
 <div id="pnl-cond" class="pnl">
-  <div class="sl">Tuesday — speed day</div>
-  <div class="dbtns" id="tbtns"></div>
-  <span class="ci" id="tinfo"></span>
-  <div class="cwrap">
-    <svg id="tsvg" viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">
-      <rect width="360" height="200" rx="6" class="crt"/>
-      <rect x="1" y="1" width="358" height="198" rx="5" fill="none" stroke="#fff" stroke-width="1" opacity="0.8"/>
-      <line x1="180" y1="0" x2="180" y2="200" class="cl"/>
-      <circle cx="180" cy="100" r="22" class="cl"/>
-      <rect x="0" y="64" width="62" height="72" class="cl"/>
-      <path d="M62 74 A36 36 0 0 1 62 136" class="cl"/>
-      <circle cx="16" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
-      <rect x="298" y="64" width="62" height="72" class="cl"/>
-      <path d="M298 74 A36 36 0 0 0 298 136" class="cl"/>
-      <circle cx="344" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
-      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-      <g id="to"></g>
-    </svg>
+  <div class="sl">Select training day</div>
+  <div class="dgrid">
+    <div class="db" id="c-mon" onclick="goCond('mon')"><div class="dn">Mon</div><div class="ddot" style="background:#333"></div><div class="dtp">No cond</div></div>
+    <div class="db on" id="c-tue" onclick="goCond('tue')"><div class="dn">Tue</div><div class="ddot" style="background:#e74c3c"></div><div class="dtp">Speed</div></div>
+    <div class="db" id="c-wed" onclick="goCond('wed')"><div class="dn">Wed</div><div class="ddot" style="background:#333"></div><div class="dtp">No cond</div></div>
+    <div class="db" id="c-thu" onclick="goCond('thu')"><div class="dn">Thu</div><div class="ddot" style="background:#333"></div><div class="dtp">No cond</div></div>
+    <div class="db" id="c-fri" onclick="goCond('fri')"><div class="dn">Fri</div><div class="ddot" style="background:#e67e22"></div><div class="dtp">Game cond</div></div>
+    <div class="db" id="c-sat" onclick="goCond('sat')"><div class="dn">Sat</div><div class="ddot" style="background:#16a085"></div><div class="dtp">Game sim</div></div>
+    <div class="db rest" id="c-sun" onclick="goCond('sun')"><div class="dn">Sun</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
   </div>
-
-  <div class="sl">Friday — conditioning</div>
-  <div class="dbtns" id="fbtns"></div>
-  <span class="ci" id="finfo"></span>
-  <div class="cwrap">
-    <svg id="fsvg" viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">
-      <rect width="360" height="200" rx="6" class="crt"/>
-      <rect x="1" y="1" width="358" height="198" rx="5" fill="none" stroke="#fff" stroke-width="1" opacity="0.8"/>
-      <line x1="180" y1="0" x2="180" y2="200" class="cl"/>
-      <circle cx="180" cy="100" r="22" class="cl"/>
-      <rect x="0" y="64" width="62" height="72" class="cl"/>
-      <path d="M62 74 A36 36 0 0 1 62 136" class="cl"/>
-      <circle cx="16" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
-      <rect x="298" y="64" width="62" height="72" class="cl"/>
-      <path d="M298 74 A36 36 0 0 0 298 136" class="cl"/>
-      <circle cx="344" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>
-      <line x1="0" y1="83" x2="62" y2="83" class="cl" opacity="0.35"/>
-      <line x1="0" y1="137" x2="62" y2="137" class="cl" opacity="0.35"/>
-      <line x1="298" y1="83" x2="360" y2="83" class="cl" opacity="0.35"/>
-      <line x1="298" y1="137" x2="360" y2="137" class="cl" opacity="0.35"/>
-      <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-      <g id="fo"></g>
-    </svg>
-  </div>
-
-  <div class="sl">Phase progression</div>
-  <div class="pr"><div class="pl">Wks 1–4: Base</div><div class="pt"><div class="pf" style="width:60%;background:#27ae60"></div></div><div class="pp">60%</div></div>
-  <div class="pr" style="margin-top:5px"><div class="pl">Wks 5–8: Build</div><div class="pt"><div class="pf" style="width:80%;background:#e67e22"></div></div><div class="pp">80%</div></div>
-  <div class="pr" style="margin-top:5px;margin-bottom:16px"><div class="pl">Wks 9–12: Peak</div><div class="pt"><div class="pf" style="width:96%;background:#e74c3c"></div></div><div class="pp">96%</div></div>
+  <div id="condbody"></div>
 </div>
 
 <!-- LIFTING -->
 <div id="pnl-lift" class="pnl">
-  <div class="sl">Lower body — Mon &amp; Thu</div>
-  <div class="bc">
-    <div class="bh"><div class="bhl"><span class="bdg br">Power</span><span class="btl">Lower power block</span></div></div>
-    <div class="er"><div><div class="en">Back squat</div><div class="eno">Wk 1–4: 70% · Wk 5–8: 80% · Wk 9–12: 85%+</div></div><div class="es">4 × 5</div></div>
-    <div class="er"><div><div class="en">Romanian deadlift</div><div class="eno">Controlled eccentric, hamstring focus</div></div><div class="es">3 × 8</div></div>
-    <div class="er"><div><div class="en">Trap bar deadlift</div><div class="eno">Explosive concentric, neutral spine</div></div><div class="es">4 × 4</div></div>
-    <div class="er"><div><div class="en">Bulgarian split squat</div><div class="eno">Single leg strength, posterior chain</div></div><div class="es">3 × 8e</div></div>
-    <div class="er"><div><div class="en">Glute-ham raise</div><div class="eno">3s eccentric, full range</div></div><div class="es">3 × 6</div></div>
-    <div class="er"><div><div class="en">Calf raises (seated + standing)</div><div class="eno">Ankle stiffness for vert</div></div><div class="es">4 × 15</div></div>
+  <div class="sl">Select training day</div>
+  <div class="dgrid">
+    <div class="db on" id="l-mon" onclick="goLift('mon')"><div class="dn">Mon</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Lower</div></div>
+    <div class="db" id="l-tue" onclick="goLift('tue')"><div class="dn">Tue</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+    <div class="db" id="l-wed" onclick="goLift('wed')"><div class="dn">Wed</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Upper</div></div>
+    <div class="db" id="l-thu" onclick="goLift('thu')"><div class="dn">Thu</div><div class="ddot" style="background:#e67e22"></div><div class="dtp">Lower+Plyo</div></div>
+    <div class="db" id="l-fri" onclick="goLift('fri')"><div class="dn">Fri</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Upper+Full</div></div>
+    <div class="db" id="l-sat" onclick="goLift('sat')"><div class="dn">Sat</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+    <div class="db rest" id="l-sun" onclick="goLift('sun')"><div class="dn">Sun</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
   </div>
-  <div class="sl">Vert / plyo — Thursday</div>
-  <div class="bc">
-    <div class="bh"><div class="bhl"><span class="bdg bo">Plyo</span><span class="btl">Shock &amp; reactive jump protocol</span></div></div>
-    <div class="er"><div><div class="en">Depth drops (shock method)</div><div class="eno">~45cm box, absorb only — no jump after</div></div><div class="es">4 × 5</div></div>
-    <div class="er"><div><div class="en">Depth jump → max vert</div><div class="eno">~45cm box, step off, immediate explosion</div></div><div class="es">5 × 5</div></div>
-    <div class="er"><div><div class="en">Single-leg bounding</div><div class="eno">Alternate legs, 20m runs</div></div><div class="es">5 × 20m</div></div>
-    <div class="er"><div><div class="en">Continuous broad jump</div><div class="eno">Land and immediately jump forward</div></div><div class="es">4 × 5</div></div>
-    <div class="er"><div><div class="en">Ankle stiffness hops</div><div class="eno">Minimal knee bend, rapid contact</div></div><div class="es">4 × 20</div></div>
-    <div class="er"><div><div class="en">Rim touches</div><div class="eno">Measure reach weekly, 10 consecutive</div></div><div class="es">3 × 10</div></div>
-  </div>
-  <div class="sl">Upper body — Wed &amp; Fri</div>
-  <div class="bc">
-    <div class="bh"><div class="bhl"><span class="bdg bl">Strength</span><span class="btl">Upper strength + shoulder health</span></div></div>
-    <div class="er"><div><div class="en">Bench press</div><div class="eno">Controlled, full range of motion</div></div><div class="es">4 × 6</div></div>
-    <div class="er"><div><div class="en">Weighted pull-ups</div><div class="eno">+5–10kg after week 4</div></div><div class="es">4 × 6</div></div>
-    <div class="er"><div><div class="en">DB incline press</div><div class="eno">Upper chest, shoulder stabiliser</div></div><div class="es">3 × 10</div></div>
-    <div class="er"><div><div class="en">Single-arm DB row</div><div class="eno">Heavy, full retraction</div></div><div class="es">3 × 10e</div></div>
-    <div class="er"><div><div class="en">Landmine press</div><div class="eno">Shoulder-safe pressing pattern</div></div><div class="es">3 × 12</div></div>
-    <div class="er"><div><div class="en">Band pull-aparts + face pulls</div><div class="eno">Rotator cuff health — non-negotiable</div></div><div class="es">3 × 15</div></div>
-  </div>
-  <div style="height:16px"></div>
+  <div id="liftbody"></div>
 </div>
 
 <!-- MACROS -->
@@ -521,8 +464,330 @@ function setupDrills(containerId, infoId, svgOverlayId, drillsObj, activeClass) 
   document.getElementById(svgOverlayId).innerHTML = drillsObj[keys[0]].svg;
 }
 
-setupDrills('tbtns','tinfo','to', TD, 'ar');
-setupDrills('fbtns','finfo','fo', FD, 'ao');
+// ===== LIFTING DATA =====
+var LD = {
+  mon: [
+    {t:'Lower power block',cls:'br',lbl:'Lower',vol:'~60 min',rows:[
+      ['Back squat','Wk 1-4: 70% · Wk 5-8: 80% · Wk 9-12: 85%+','4 x 5'],
+      ['Pause squat','3s pause at bottom, 60% 1RM — builds bottom strength','3 x 4'],
+      ['Romanian deadlift','Controlled 3s eccentric, hamstring focus','3 x 8'],
+      ['Trap bar deadlift','Explosive concentric, neutral spine','4 x 4'],
+      ['Bulgarian split squat','Rear foot elevated, load through front heel','3 x 8e'],
+      ['Glute-ham raise','3s eccentric, partner or GHD machine','3 x 6'],
+      ['Nordic curl','Eccentric only, slow descent — partner holds ankles','3 x 5'],
+      ['Leg press — single leg','Quad strength, knee tracking focus','3 x 10e'],
+      ['Hip thrust (barbell)','Full hip extension, pause at top','3 x 10'],
+      ['Calf raises seated','Soleus focus, 2s pause at stretch','4 x 15'],
+      ['Calf raises standing','Gastrocnemius, full ROM','4 x 15'],
+      ['Tibialis raise','Shin strength for ankle stiffness and vert','3 x 20']
+    ]},
+    {t:'Core — anti-rotation & stability',cls:'bo',lbl:'Core',vol:'',rows:[
+      ['Pallof press','Half-kneeling, resist rotation','3 x 12e'],
+      ['Dead bug','Opposite arm and leg, lower back flat','3 x 10e'],
+      ['Ab wheel rollout','Full extension if possible, controlled return','3 x 8'],
+      ['Plank with reach','Extend one arm forward, hold 2s','3 x 10e'],
+      ['Copenhagen plank','Adductor strength — groin injury prevention','3 x 20s e']
+    ]}
+  ],
+  tue: null,
+  wed: [
+    {t:'Upper push — strength',cls:'bl',lbl:'Push',vol:'',rows:[
+      ['Bench press','Full ROM, 1s pause on chest wk 1-6','4 x 6'],
+      ['DB incline press','Upper chest, shoulder stabiliser, slight arch','3 x 10'],
+      ['Landmine press','Shoulder-safe pressing — neutral wrist path','3 x 12e'],
+      ['Push press','Leg drive into overhead — power transfer drill','4 x 4'],
+      ['Cable chest fly','Squeeze at centre, feel the stretch','3 x 15'],
+      ['Overhead DB press (seated)','Vertical pressing pattern, core braced','3 x 10']
+    ]},
+    {t:'Upper pull — strength',cls:'bl',lbl:'Pull',vol:'',rows:[
+      ['Weighted pull-ups','+5-10kg after week 4, dead hang each rep','4 x 6'],
+      ['Single-arm DB row','Drive elbow to hip, full retraction','3 x 10e'],
+      ['Barbell row (Pendlay)','Horizontal pull, explosive concentric','4 x 6'],
+      ['Cable face pull','External rotation, rear delt focus','3 x 15'],
+      ['Chest-supported DB row','Remove lower back — isolate upper back','3 x 12'],
+      ['Straight-arm pulldown','Lat activation, scapular depression','3 x 15']
+    ]},
+    {t:'Shoulder health & accessory',cls:'bg',lbl:'Shoulder',vol:'',rows:[
+      ['Band pull-aparts','Horizontal, retract scapula fully','3 x 20'],
+      ['Face pulls','External rotation, thumbs behind ears','3 x 15'],
+      ['Side-lying external rotation','Rotator cuff — light dumbbell only','3 x 15e'],
+      ['Prone Y-T-W raises','Scapular stability, bodyweight or light plate','2 x 8'],
+      ['Wrist roller','Forearm strength for ball control','3 x full'],
+      ['Dead hang','Shoulder decompression + grip strength','3 x 30s']
+    ]}
+  ],
+  thu: [
+    {t:'Vert / plyometric block',cls:'bo',lbl:'Plyo',vol:'',rows:[
+      ['Depth drops (shock method)','~45cm box, absorb only — no jump, max stiffness','4 x 5'],
+      ['Depth jump to max vert','~45cm box, step off, touch-and-go, immediate explosion','5 x 5'],
+      ['Single-leg depth jump to vert','Same as above — one foot landing, explosive push','3 x 5e'],
+      ['Consecutive box jumps','Step down immediately after landing, no pause','4 x 6'],
+      ['Lateral bound to stick','Explosive lateral push, stick landing 2s','4 x 5e'],
+      ['Single-leg bounding','Maximum distance per bound, alternate legs','5 x 20m'],
+      ['Continuous broad jump','Horizontal power chain — land and immediately go','4 x 5'],
+      ['Pogo hops (double leg)','Minimal knee bend, stiff ankle, rapid rebound','4 x 20'],
+      ['Pogo hops (single leg)','Build to 3 x 15 each by week 8','3 x 12e'],
+      ['Drop land to sprint','Drop off 30cm box, absorb and sprint 9m — reactive','5 x 5'],
+      ['Rim touches','10 consecutive max jumps — measure weekly','3 x 10']
+    ]},
+    {t:'Lower accessory',cls:'br',lbl:'Lower',vol:'',rows:[
+      ['Trap bar deadlift','Explosive concentric, reset each rep','4 x 4'],
+      ['Bulgarian split squat','Single leg power — controlled down, explosive up','3 x 8e'],
+      ['Step-up to knee drive','Box step-up, drive knee up at top','3 x 10e'],
+      ['Reverse lunge','Long stride, upright torso','3 x 10e'],
+      ['Hip thrust (single leg)','Glute isolation, pause at top','3 x 10e'],
+      ['Ankle hops over mini hurdles','Reactivity and stiffness work','3 x 10']
+    ]},
+    {t:'Core — rotational power',cls:'bo',lbl:'Core',vol:'',rows:[
+      ['Med ball rotational throw (wall)','Hip rotation into throw, basketball relevant','4 x 8e'],
+      ['Med ball slam','Full body extension, maximum effort','4 x 8'],
+      ['Cable woodchop (high to low)','Rotational strength — mimics cutting motion','3 x 12e'],
+      ['Hanging knee raise','Hip flexor and lower ab strength','3 x 15'],
+      ['L-sit hold (parallel bars or floor)','Hip flexor + core isometric strength','3 x 15s']
+    ]}
+  ],
+  fri: [
+    {t:'Upper push — strength',cls:'bl',lbl:'Push',vol:'',rows:[
+      ['Bench press','Full range, controlled — heavier than Wed','4 x 5'],
+      ['Close-grip bench press','Tricep emphasis, narrow grip','3 x 8'],
+      ['Dips (weighted)','Full depth, +weight once bodyweight is easy','3 x 8'],
+      ['DB shoulder press','Seated, strict — no leg drive','3 x 10'],
+      ['Overhead carry (farmers)','Core and shoulder stability','3 x 30m'],
+      ['Tricep pushdown (cable)','Full extension, squeeze at bottom','3 x 15']
+    ]},
+    {t:'Upper pull — strength',cls:'bl',lbl:'Pull',vol:'',rows:[
+      ['Weighted pull-ups','Heavier than Wed — strength emphasis','4 x 5'],
+      ['Chest-supported DB row','High row — upper back thickness','3 x 10'],
+      ['Meadows row (landmine)','Unilateral, loaded stretch on lat','3 x 10e'],
+      ['Cable pull-apart','Rear delt and external rotation','3 x 15'],
+      ['Barbell shrug','Trap development — heavy, controlled','3 x 12'],
+      ['Bicep curl (EZ bar)','Elbow flexor — shooting and handle strength','3 x 12']
+    ]},
+    {t:'Full body power',cls:'br',lbl:'Full',vol:'',rows:[
+      ['Trap bar deadlift','Heaviest lift of the week — max effort','4 x 4'],
+      ['Hang power clean','Triple extension, fast elbows, athletic power','4 x 3'],
+      ['Barbell row (Pendlay)','Explosive pull, horizontal strength','4 x 5'],
+      ['Farmers carry','Both hands, 30m — grip, core, traps','3 x 30m'],
+      ['Sled push','30m hard push, drive through floor','4 x 30m'],
+      ['Reverse hyper','Lower back, glute, hamstring — decompresses spine','3 x 15']
+    ]},
+    {t:'Core — anti-rotation & stability',cls:'bo',lbl:'Core',vol:'',rows:[
+      ['Pallof press','Standing, resist rotation both sides','3 x 12e'],
+      ['Suitcase carry','One dumbbell, resist lateral lean','3 x 30m e'],
+      ['Cable woodchop (low to high)','Upward rotational power','3 x 12e'],
+      ['Hanging leg raise','Straight legs, controlled descent','3 x 12'],
+      ['Ab rollout (barbell)','Full extension, no lower back arch','3 x 8']
+    ]}
+  ],
+  sat: null,
+  sun: null
+};
+
+function goLift(k) {
+  var dbs = document.querySelectorAll('#pnl-lift .db');
+  for (var i=0;i<dbs.length;i++) dbs[i].classList.remove('on');
+  document.getElementById('l-'+k).classList.add('on');
+  var body = document.getElementById('liftbody');
+  var d = LD[k];
+  if (!d) {
+    body.innerHTML = '<div class="rc"><div class="rt">No lifting today</div><div class="rtx">Rest and recover. Focus on sleep, nutrition and mobility work only.</div></div>';
+    return;
+  }
+  var h = '';
+  for (var i=0;i<d.length;i++) {
+    var bl = d[i];
+    h += '<div class="bc"><div class="bh"><div class="bhl"><span class="bdg '+bl.cls+'">'+bl.lbl+'</span><span class="btl">'+bl.t+'</span></div>'+(bl.vol?'<span class="bvl">'+bl.vol+'</span>':'')+'</div>';
+    for (var j=0;j<bl.rows.length;j++) {
+      var r = bl.rows[j];
+      h += '<div class="er"><div><div class="en">'+r[0]+'</div><div class="eno">'+r[1]+'</div></div><div class="es">'+r[2]+'</div></div>';
+    }
+    h += '</div>';
+  }
+  body.innerHTML = h;
+}
+goLift('mon');
+
+// ===== CONDITIONING DATA =====
+var CD = {
+  mon: null,
+  tue: {
+    label: 'Tuesday — speed day (~2,800m)',
+    showCourt: true,
+    courtId: 'tue',
+    extraBlocks: [
+      {t:'Full session order',cls:'br',lbl:'Order',vol:'~90 min',rows:[
+        ['1. Dynamic warm-up + A/B skips','Jog 2x150m, high knees, butt kicks, A-skip, B-skip','~400m'],
+        ['2. 9m resisted sprint (sled)','Drive phase, heavy resistance — full recovery between','8 x 9m'],
+        ['3. 9m flying sprint','9m rolling build then 9m true max velocity','6 x 9m'],
+        ['4. 18m acceleration sprint','Standing start — explode, time every rep','8 x 18m'],
+        ['5. T-drill court cones','~10m+5m+10m+5m, timed — track weekly PB','8 x timed'],
+        ['6. 5-10-5 pro agility shuttle','4.5m each direction — explosive COD','8 x timed'],
+        ['7. Lane shuffle to 18m closeout','Shuffle full paint width, burst to shooter','8 x each'],
+        ['8. Zigzag cone weave full court','Cones every 5m down 28m court','6 x 28m'],
+        ['9. Court shuttle + sprint retreat','28m sprint then immediately 28m backpedal','6 x 56m'],
+        ['10. 400m cool-down jog','Easy pace, flush lactic acid','1 x 400m']
+      ]},
+      {t:'Speed targets by phase',cls:'br',lbl:'Targets',vol:'',rows:[
+        ['T-drill — weeks 1-4','Target sub-10.5s','Base'],
+        ['T-drill — weeks 5-8','Target sub-10.0s','Build'],
+        ['T-drill — weeks 9-12','Target sub-9.5s','Peak'],
+        ['5-10-5 — weeks 1-4','Target sub-4.8s','Base'],
+        ['5-10-5 — weeks 5-8','Target sub-4.5s','Build'],
+        ['5-10-5 — weeks 9-12','Target sub-4.3s','Peak'],
+        ['18m sprint — weeks 1-4','Target sub-2.8s','Base'],
+        ['18m sprint — weeks 9-12','Target sub-2.5s','Peak']
+      ]},
+      {t:'Mobility & recovery',cls:'bg',lbl:'Cool-down',vol:'15 min',rows:[
+        ['Hip flexor stretch','Kneeling, rear shin on ground, lean forward','2 x 60s e'],
+        ['Pigeon pose','External hip rotation — glute and piriformis','2 x 60s e'],
+        ['Hamstring PNF stretch','Contract-relax cycle — better ROM gains','2 x 30s e'],
+        ['Calf and ankle circles','Reduce stiffness post-sprint work','2 x 30s e'],
+        ['Foam roll — IT band, quads, calves','Reduce DOMS, increase blood flow','Full body']
+      ]}
+    ]
+  },
+  wed: null,
+  thu: null,
+  fri: {
+    label: 'Friday — game conditioning (~3,600m)',
+    showCourt: true,
+    courtId: 'fri',
+    extraBlocks: [
+      {t:'Full session order',cls:'bo',lbl:'Order',vol:'~75 min',rows:[
+        ['1. Progressive warm-up jog','5 laps of court perimeter (~84m each)','5 x 84m'],
+        ['2. Dynamic stretch circuit','Leg swings, hip circles, lateral lunges','5 min'],
+        ['3. 17s — baseline to baseline','17 trips x 28m = 476m. Touch baseline each time.','8 sets'],
+        ['4. Suicide runs','Baseline to 4.5m to 14m to 28m and back (~95m)','8 x ~95m'],
+        ['5. 3-on-3 half-court live','High intensity, real decisions, 90s rest between','6 x 4 min'],
+        ['6. Full-court 1v1 isolation','Attack the basket — 56m round trip each possession','14 possessions'],
+        ['7. Sprint finisher — full court','28m sprint, walk back — reps 6-10 are the test','10 x 28m'],
+        ['8. Half-court burst back-to-back','14m down + 14m back, no rest, 45s between rounds','4 x 56m'],
+        ['9. Free throw pressure drill','Shoot 15 FTs after the finisher — simulate end of game','15 makes'],
+        ['10. Cool-down jog','Easy pace, 3 laps','3 x 84m']
+      ]},
+      {t:'17s drill targets by phase',cls:'bo',lbl:'17s Targets',vol:'',rows:[
+        ['Weeks 1-4: Base','Complete 17 trips in under 65s — build the base','65s target'],
+        ['Weeks 5-8: Build','Sub-60s — standard D1 benchmark','60s target'],
+        ['Weeks 9-12: Peak','Sub-56s — elite level SG fitness','56s target'],
+        ['Rest between sets — weeks 1-4','45 seconds active rest','45s rest'],
+        ['Rest between sets — weeks 5-8','30 seconds active rest','30s rest'],
+        ['Rest between sets — weeks 9-12','20 seconds active rest','20s rest']
+      ]},
+      {t:'3-on-3 defensive assignments',cls:'bl',lbl:'Defence',vol:'',rows:[
+        ['On-ball defence','Stay in front — no reaching, use your feet','Priority 1'],
+        ['Help defence rotations','Communicate every screen — call out loud','Priority 2'],
+        ['Closeout technique','High hands, stay low, no flying past the shooter','Priority 3'],
+        ['Box out on every shot','Mandatory — 5 possessions without = extra sprint','Mandatory'],
+        ['Transition defence','Sprint back on every turnover — no exceptions','Mandatory']
+      ]},
+      {t:'Weekly volume by phase',cls:'bo',lbl:'Volume',vol:'',rows:[
+        ['Weeks 1-4: Base','6 x 17s sets, 6 x suicides, 45s rest','~5,800m/wk'],
+        ['Weeks 5-8: Build','8 x 17s sets (sub-60s), 8 x suicides, 35s rest','~7,200m/wk'],
+        ['Weeks 9-12: Peak','8 x 17s sets (sub-56s), 8 x suicides, 30s rest','~8,400m/wk']
+      ]},
+      {t:'Cool-down & recovery',cls:'bg',lbl:'Recovery',vol:'15 min',rows:[
+        ['Static quad stretch','Standing, heel to glute, 60s each','2 x 60s e'],
+        ['Seated hamstring stretch','Legs straight, reach for toes','2 x 60s e'],
+        ['Hip flexor lunge stretch','Low kneeling, lean forward','2 x 60s e'],
+        ['Calf wall stretch','Gastrocnemius and soleus separately','2 x 45s e'],
+        ['Foam roll — hamstrings and glutes','Long slow passes, pause on tight spots','5 min'],
+        ['Cold water if available','Ice bath or cold shower — reduces inflammation','10-15 min']
+      ]}
+    ]
+  },
+  sat: {
+    label: 'Saturday — game simulation (~4,000m+)',
+    showCourt: false,
+    extraBlocks: [
+      {t:'5-on-5 live scrimmage',cls:'bt2',lbl:'Live',vol:'~4,000m+',rows:[
+        ['Full-game scrimmage — set 1','Full game speed, no holding back','8 min'],
+        ['Full-game scrimmage — set 2','Rotate in fresh players at each stoppage','8 min'],
+        ['Full-game scrimmage — set 3','Fatigue is the point — push through','8 min'],
+        ['Full-game scrimmage — set 4','Final set — leave everything on the court','8 min'],
+        ['Off-ball movement focus','Cuts off ball screens, V-cuts, back-cuts','Throughout'],
+        ['Defensive slide focus','Stay disciplined even when gassed','Throughout']
+      ]},
+      {t:'Post-scrimmage skill work (300 makes)',cls:'bt2',lbl:'Skill',vol:'300 makes',rows:[
+        ['Spot-up 3s — 5 spots around arc','16 makes per spot — tired legs, locked form','80 makes'],
+        ['Finishing both hands — full speed','Layup package, pro hop, euro step','60 makes'],
+        ['Pull-up mid from DHO','Simulate real game situations off fatigue','40 makes'],
+        ['Step-back 3 both sides','Must still hold form under fatigue','30 makes'],
+        ['Cool-down free throws','2 at a time as in real games — routine matters','30 makes'],
+        ['Bonus: Contested 3s if time','High hands, timer on — 60s shot clock each','40 makes']
+      ]},
+      {t:'Post-game conditioning finisher',cls:'bo',lbl:'Finisher',vol:'',rows:[
+        ['Post-scrimmage sprint series','28m full court x 8, walk back between','8 x 28m'],
+        ['Suicide runs cool-down pace','20% lower intensity — flush lactic acid','4 x ~95m'],
+        ['Lateral shuffle full court','Low stance, full court width, timed','4 x 28m'],
+        ['Free throw pressure drill','Shoot after every sprint — no rest','15 makes']
+      ]},
+      {t:'Recovery protocol — post Saturday',cls:'bg',lbl:'Recovery',vol:'',rows:[
+        ['Protein shake immediately','40g whey within 20 min of finishing','40g protein'],
+        ['Static stretching — full body','Hold each 60-90s — whole lower body + upper','20 min'],
+        ['Foam roll entire body','Spend extra time on calves and IT band','10 min'],
+        ['Ice any inflamed joints','Knees and ankles — 10-15 min each if needed','Optional'],
+        ['Sunday is full rest — protect it','No optional extras — adaptation happens Sunday','Mandatory'],
+        ['Sleep — Sunday night priority','9 hours minimum going into Monday','9 hrs']
+      ]}
+    ]
+  },
+  sun: null
+};
+
+var condInited = false;
+
+function goCond(k) {
+  var dbs = document.querySelectorAll('#pnl-cond .db');
+  for (var i=0;i<dbs.length;i++) dbs[i].classList.remove('on');
+  document.getElementById('c-'+k).classList.add('on');
+  var body = document.getElementById('condbody');
+  var d = CD[k];
+  if (!d) {
+    body.innerHTML = '<div class="rc"><div class="rt">No conditioning today</div><div class="rtx">Active recovery only. Light walking, mobility work or foam rolling. Save the legs for the next training day.</div></div>';
+    return;
+  }
+  var h = '<div class="sl">'+d.label+'</div>';
+  if (d.showCourt) {
+    if (d.courtId === 'tue') {
+      h += '<div class="dbtns" id="tbtns2"></div><span class="ci" id="tinfo2"></span><div class="cwrap"><svg id="tsvg2" viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">'+courtBase('arr3')+'<g id="to2"></g></svg></div>';
+    } else {
+      h += '<div class="dbtns" id="fbtns2"></div><span class="ci" id="finfo2"></span><div class="cwrap"><svg id="fsvg2" viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg">'+courtBase('arr4')+'<g id="fo2"></g></svg></div>';
+    }
+  }
+  for (var i=0;i<d.extraBlocks.length;i++) {
+    var bl = d.extraBlocks[i];
+    h += '<div class="bc"><div class="bh"><div class="bhl"><span class="bdg '+bl.cls+'">'+bl.lbl+'</span><span class="btl">'+bl.t+'</span></div>'+(bl.vol?'<span class="bvl">'+bl.vol+'</span>':'')+'</div>';
+    for (var j=0;j<bl.rows.length;j++) {
+      var r = bl.rows[j];
+      h += '<div class="er"><div><div class="en">'+r[0]+'</div><div class="eno">'+r[1]+'</div></div><div class="es">'+r[2]+'</div></div>';
+    }
+    h += '</div>';
+  }
+  body.innerHTML = h;
+
+  if (d.showCourt && d.courtId === 'tue') {
+    setupDrills('tbtns2','tinfo2','to2', TD, 'ar');
+  }
+  if (d.showCourt && d.courtId === 'fri') {
+    setupDrills('fbtns2','finfo2','fo2', FD, 'ao');
+  }
+}
+
+function courtBase(markerId) {
+  return '<rect width="360" height="200" rx="6" class="crt"/>' +
+    '<rect x="1" y="1" width="358" height="198" rx="5" fill="none" stroke="#fff" stroke-width="1" opacity="0.8"/>' +
+    '<line x1="180" y1="0" x2="180" y2="200" class="cl"/>' +
+    '<circle cx="180" cy="100" r="22" class="cl"/>' +
+    '<rect x="0" y="64" width="62" height="72" class="cl"/>' +
+    '<path d="M62 74 A36 36 0 0 1 62 136" class="cl"/>' +
+    '<circle cx="16" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>' +
+    '<rect x="298" y="64" width="62" height="72" class="cl"/>' +
+    '<path d="M298 74 A36 36 0 0 0 298 136" class="cl"/>' +
+    '<circle cx="344" cy="100" r="6" fill="none" stroke="#fff" stroke-width="1" opacity="0.7"/>' +
+    '<defs><marker id="'+markerId+'" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>';
+}
+
+goCond('tue');
 </script>
 </body>
 </html>
