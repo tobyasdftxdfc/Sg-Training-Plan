@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SG Training">
+<title>SG Elite Training</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0d0d12;color:#eeeef5;overflow:hidden;height:100dvh;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+#hdr{background:#18181f;border-bottom:1px solid rgba(255,255,255,0.07);padding:12px 16px 10px;flex-shrink:0}
+#hdr h1{font-size:17px;font-weight:700}
+#hdr p{font-size:11px;color:#7a7a8c;margin-top:2px}
+.pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:#20202a;color:#7a7a8c;border:1px solid rgba(255,255,255,0.07)}
+.pill.o{background:rgba(255,140,0,0.15);color:#ffaa33;border-color:transparent}
+.pill.b{background:rgba(46,134,222,0.15);color:#6ab0f5;border-color:transparent}
+.pill.g{background:rgba(39,174,96,0.15);color:#55dd88;border-color:transparent}
+#nav{background:#18181f;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+#nav::-webkit-scrollbar{display:none}
+.nt{flex-shrink:0;font-size:12px;font-weight:600;padding:11px 14px;color:#7a7a8c;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.nt.on{color:#ff8c00;border-bottom-color:#ff8c00}
+#scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(env(safe-area-inset-bottom,0px)+20px)}
+.pnl{display:none}
+.pnl.on{display:block}
+.sl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#7a7a8c;padding:16px 16px 7px}
+.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:0 16px 4px}
+.db{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:7px 3px;text-align:center;cursor:pointer}
+.db.on{background:rgba(255,140,0,0.15);border-color:#ff8c00}
+.db.on .dn{color:#ffaa33}
+.db.rest{background:#20202a}
+.dn{font-size:11px;font-weight:700}
+.ddot{width:6px;height:6px;border-radius:50%;margin:4px auto 2px}
+.dtp{font-size:8px;color:#7a7a8c;line-height:1.2}
+.mrow{display:flex;gap:6px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mrow::-webkit-scrollbar{display:none}
+.mc{flex-shrink:0;background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:8px 11px;text-align:center;min-width:68px}
+.mv{font-size:19px;font-weight:700;line-height:1}
+.ml{font-size:9px;color:#7a7a8c;text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+.bc{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin:0 16px 10px;overflow:hidden}
+.bh{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;background:#20202a;border-bottom:1px solid rgba(255,255,255,0.07);gap:8px}
+.bhl{display:flex;align-items:center;gap:7px}
+.bdg{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.bl{background:rgba(46,134,222,0.15);color:#6ab0f5}
+.bg{background:rgba(39,174,96,0.15);color:#55dd88}
+.bo{background:rgba(255,140,0,0.15);color:#ffaa33}
+.br{background:rgba(231,76,60,0.15);color:#ff6655}
+.bp{background:rgba(142,68,173,0.15);color:#bb88dd}
+.bt2{background:rgba(22,160,133,0.15);color:#44ddbb}
+.btl{font-size:13px;font-weight:600}
+.bvl{font-size:11px;font-weight:600;color:#6ab0f5;white-space:nowrap}
+.er{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-bottom:1px solid rgba(255,255,255,0.07);gap:8px}
+.er:last-child{border-bottom:none}
+.er.ht{cursor:pointer}
+.en{font-size:13px;font-weight:500}
+.eno{font-size:11px;color:#7a7a8c;margin-top:2px}
+.tg{font-size:10px;font-weight:600;color:#444455;margin-left:4px;letter-spacing:.3px}
+.es{font-size:11px;font-weight:600;color:#ffaa33;white-space:nowrap;text-align:right;min-width:65px}
+.tiprow{display:none;padding:0 13px 10px}
+.tiprow.on{display:block}
+.tipbox{background:#141f14;border:1px solid rgba(39,174,96,0.2);border-radius:6px;padding:8px 11px;font-size:11px;color:#55dd88;line-height:1.6}
+.rc{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin:16px;padding:24px 18px;text-align:center}
+.rt{font-size:17px;font-weight:700;margin-bottom:8px}
+.rtx{font-size:13px;color:#7a7a8c;line-height:1.6}
+.dbtns{display:flex;gap:5px;padding:8px 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.dbtns::-webkit-scrollbar{display:none}
+.dbtn{flex-shrink:0;font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,0.07);background:#18181f;color:#7a7a8c;cursor:pointer;white-space:nowrap;-webkit-appearance:none}
+.dbtn.ar{background:rgba(231,76,60,0.15);color:#ff6655;border-color:transparent}
+.dbtn.ao{background:rgba(255,140,0,0.15);color:#ffaa33;border-color:transparent}
+.ci{font-size:11px;color:#7a7a8c;padding:4px 16px 8px;display:block}
+.ci strong{color:#eeeef5;font-weight:600}
+.cwrap{padding:0 16px 12px}
+.cwrap svg{border-radius:8px;display:block;width:100%;height:auto}
+.crt{fill:#2d5a1e}
+.cl{fill:none;stroke:#fff;stroke-width:0.7;opacity:0.6}
+.pr{display:flex;align-items:center;gap:10px;padding:4px 16px}
+.pl{font-size:12px;min-width:110px}
+.pt{flex:1;height:5px;background:#20202a;border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px}
+.pp{font-size:11px;color:#7a7a8c;min-width:28px;text-align:right}
+.mgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 16px 10px}
+.macc{background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:11px 8px;text-align:center}
+.malbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:#7a7a8c;margin-bottom:4px}
+.maval{font-size:24px;font-weight:700;line-height:1;margin-bottom:2px}
+.maunt{font-size:11px;color:#7a7a8c}
+.mbar{display:flex;height:7px;border-radius:4px;overflow:hidden;margin:0 16px 10px}
+.tlist{display:flex;flex-direction:column;gap:6px;padding:0 16px}
+.tr{display:flex;gap:9px;background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:9px 12px;align-items:flex-start}
+.tt{font-size:11px;font-weight:600;color:#6ab0f5;white-space:nowrap;min-width:56px;padding-top:1px}
+.td{font-size:12px;line-height:1.5}
+.note{font-size:12px;color:#7a7a8c;line-height:1.6;margin:0 16px 14px;background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 13px}
+
+
+</style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff8c00">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('./sw.js').catch(function(e){console.log('SW error:',e)});
+  });
+}
+</script>
+</head>
+<body>
+<div id="hdr">
+  <h1>Shooting Guard Elite Program</h1>
+  <p>12-week D1 development · 300 makes/day</p>
+  <div class="pills">
+    <span class="pill o">6'3.5" / 82kg</span>
+    <span class="pill b">Body recomposition</span>
+    <span class="pill g">300 makes/day</span>
+    <span class="pill">6 days/week</span>
+  </div>
+</div>
+<div id="nav">
+  <div class="nt on" onclick="goTab('sched',this)">Schedule</div>
+  <div class="nt" onclick="goTab('cond',this)">Conditioning</div>
+  <div class="nt" onclick="goTab('lift',this)">Lifting</div>
+  <div class="nt" onclick="goTab('handles',this)">Handles</div>
+  <div class="nt" onclick="goTab('macros',this)">Macros</div>
+</div>
+<div id="scroll">
+
+<!-- ═══════════════ SCHEDULE ═══════════════ -->
+<div id="pnl-sched" class="pnl on">
+  <div class="sl">Select day</div>
+  <div class="dgrid">
+    <div class="db on" id="d-mon" onclick="goDay('mon')"><div class="dn">Mon</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Skill+Lower</div></div>
+    <div class="db" id="d-tue" onclick="goDay('tue')"><div class="dn">Tue</div><div class="ddot" style="background:#e67e22"></div><div class="dtp">Speed+Cond</div></div>
+    <div class="db" id="d-wed" onclick="goDay('wed')"><div class="dn">Wed</div><div class="ddot" style="background:#8e44ad"></div><div class="dtp">Upper+Handles</div></div>
+    <div class="db" id="d-thu" onclick="goDay('thu')"><div class="dn">Thu</div><div class="ddot" style="background:#27ae60"></div><div class="dtp">Vert+Skill</div></div>
+    <div class="db" id="d-fri" onclick="goDay('fri')"><div class="dn">Fri</div><div class="ddot" style="background:#e74c3c"></div><div class="dtp">Full+Cond</div></div>
+    <div class="db" id="d-sat" onclick="goDay('sat')"><div class="dn">Sat</div><div class="ddot" style="background:#16a085"></div><div class="dtp">Game Sim</div></div>
+    <div class="db rest" id="d-sun" onclick="goDay('sun')"><div class="dn">Sun</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+  </div>
+  <div id="daybody"></div>
+</div>
+
+<!-- ═══════════════ CONDITIONING ═══════════════ -->
+<div id="pnl-cond" class="pnl">
+  <div class="sl">Select day</div>
+  <div class="dgrid">
+    <div class="db" id="c-mon" onclick="goCond('mon')"><div class="dn">Mon</div><div class="ddot" style="background:#333"></div><div class="dtp">No cond</div></div>
+    <div class="db on" id="c-tue" onclick="goCond('tue')"><div class="dn">Tue</div><div class="ddot" style="background:#e74c3c"></div><div class="dtp">Speed</div></div>
+    <div class="db" id="c-wed" onclick="goCond('wed')"><div class="dn">Wed</div><div class="ddot" style="background:#333"></div><div class="dtp">No cond</div></div>
+    <div class="db" id="c-thu" onclick="goCond('thu')"><div class="dn">Thu</div><div class="ddot" style="background:#333"></div><div class="dtp">No cond</div></div>
+    <div class="db" id="c-fri" onclick="goCond('fri')"><div class="dn">Fri</div><div class="ddot" style="background:#e67e22"></div><div class="dtp">Game cond</div></div>
+    <div class="db" id="c-sat" onclick="goCond('sat')"><div class="dn">Sat</div><div class="ddot" style="background:#16a085"></div><div class="dtp">Endurance</div></div>
+    <div class="db rest" id="c-sun" onclick="goCond('sun')"><div class="dn">Sun</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+  </div>
+  <div id="condbody"></div>
+</div>
+
+<!-- ═══════════════ LIFTING ═══════════════ -->
+<div id="pnl-lift" class="pnl">
+  <div class="sl">Select day</div>
+  <div class="dgrid">
+    <div class="db on" id="l-mon" onclick="goLift('mon')"><div class="dn">Mon</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Lower</div></div>
+    <div class="db" id="l-tue" onclick="goLift('tue')"><div class="dn">Tue</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+    <div class="db" id="l-wed" onclick="goLift('wed')"><div class="dn">Wed</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Upper</div></div>
+    <div class="db" id="l-thu" onclick="goLift('thu')"><div class="dn">Thu</div><div class="ddot" style="background:#e67e22"></div><div class="dtp">Lower+Plyo</div></div>
+    <div class="db" id="l-fri" onclick="goLift('fri')"><div class="dn">Fri</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Upper+Full</div></div>
+    <div class="db" id="l-sat" onclick="goLift('sat')"><div class="dn">Sat</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+    <div class="db rest" id="l-sun" onclick="goLift('sun')"><div class="dn">Sun</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+  </div>
+  <div id="liftbody"></div>
+</div>
+
+<!-- ═══════════════ HANDLES ═══════════════ -->
+<div id="pnl-handles" class="pnl">
+  <div class="sl">Select day</div>
+  <div class="dgrid">
+    <div class="db on" id="h-mon" onclick="goHandles('mon')"><div class="dn">Mon</div><div class="ddot" style="background:#2980b9"></div><div class="dtp">Foundations</div></div>
+    <div class="db" id="h-tue" onclick="goHandles('tue')"><div class="dn">Tue</div><div class="ddot" style="background:#e67e22"></div><div class="dtp">Combos</div></div>
+    <div class="db" id="h-wed" onclick="goHandles('wed')"><div class="dn">Wed</div><div class="ddot" style="background:#8e44ad"></div><div class="dtp">Weak Hand</div></div>
+    <div class="db" id="h-thu" onclick="goHandles('thu')"><div class="dn">Thu</div><div class="ddot" style="background:#27ae60"></div><div class="dtp">Attacks</div></div>
+    <div class="db" id="h-fri" onclick="goHandles('fri')"><div class="dn">Fri</div><div class="ddot" style="background:#e74c3c"></div><div class="dtp">Pressure</div></div>
+    <div class="db" id="h-sat" onclick="goHandles('sat')"><div class="dn">Sat</div><div class="ddot" style="background:#16a085"></div><div class="dtp">Full Session</div></div>
+    <div class="db rest" id="h-sun" onclick="goHandles('sun')"><div class="dn">Sun</div><div class="ddot" style="background:#333"></div><div class="dtp">Rest</div></div>
+  </div>
+  <div id="handlesbody"></div>
+</div>
+
+<!-- ═══════════════ MACROS ═══════════════ -->
+<div id="pnl-macros" class="pnl">
+  <div class="sl">Daily targets</div>
+  <div class="mgrid">
+    <div class="macc"><div class="malbl">Calories</div><div class="maval">2,950</div><div class="maunt">kcal/day</div></div>
+    <div class="macc"><div class="malbl">Protein</div><div class="maval" style="color:#ff6655">195g</div><div class="maunt">2.4g/kg</div></div>
+    <div class="macc"><div class="malbl">Carbs</div><div class="maval" style="color:#6ab0f5">355g</div><div class="maunt">fuel</div></div>
+  </div>
+  <div class="mbar">
+    <div style="flex:26;background:rgba(231,76,60,0.3)"></div>
+    <div style="flex:48;background:rgba(46,134,222,0.3)"></div>
+    <div style="flex:26;background:rgba(255,140,0,0.3)"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;padding:0 16px 14px;font-size:10px;color:#7a7a8c"><span>Protein 26%</span><span>Carbs 48%</span><span>Fat 26% · 85g</span></div>
+  <div class="sl">Meal timing</div>
+  <div class="tlist">
+    <div class="tr"><div class="tt">7:00 AM</div><div class="td"><strong>Wake-up:</strong> 4 eggs + oats + banana + coffee — ~650 kcal</div></div>
+    <div class="tr"><div class="tt">10:00 AM</div><div class="td"><strong>Pre-workout:</strong> Greek yogurt + berries + honey — ~300 kcal</div></div>
+    <div class="tr"><div class="tt">12:30 PM</div><div class="td"><strong>Post-workout:</strong> 40g whey + rice cakes + almond butter — ~450 kcal</div></div>
+    <div class="tr"><div class="tt">3:00 PM</div><div class="td"><strong>Lunch:</strong> Chicken 200g + brown rice + veg + olive oil — ~750 kcal</div></div>
+    <div class="tr"><div class="tt">6:00 PM</div><div class="td"><strong>Dinner:</strong> Salmon or lean beef + sweet potato + greens — ~650 kcal</div></div>
+    <div class="tr"><div class="tt">9:00 PM</div><div class="td"><strong>Overnight:</strong> Cottage cheese or casein — 30g protein, slow release</div></div>
+  </div>
+  <div class="sl">Recomposition rules</div>
+  <div class="note">Target <strong style="color:#eeeef5">0.5-0.75kg change/week</strong>. Hard days (Mon/Thu/Fri) add 50-80g carbs. Rest day ~2,400 kcal. Hydration: <strong style="color:#eeeef5">4L+ on court days</strong>. Creatine 5g daily. Sleep 8-9 hrs. Track body comp monthly.</div>
+  <div style="height:16px"></div>
+</div>
+
+</div><!-- /scroll -->
+
+<script>
+/* ══════════════════════════════════════════
+   SCHEDULE DATA
+══════════════════════════════════════════ */
+var SD={mon:{makes:[{v:120,l:'3pt',c:'#55dd88'},{v:100,l:'mid-range',c:'#6ab0f5'},{v:50,l:'finishing',c:'#ffaa33'},{v:30,l:'FTs',c:'#ff6655'}],blocks:[{t:'Skill — catch & shoot',cls:'bg',lbl:'Shooting',vol:'300 makes',rows:[['Corner 3 L&R catch & shoot','Feet set on catch, no dribble','20 each'],['Wing 3 L&R catch & shoot','Off pin-down curl movement','20 each'],['Left elbow mid-range','Catch & shoot, perfect footwork','20 makes'],['Right elbow mid-range','Catch & shoot, perfect footwork','20 makes'],['Left-hand floater (paint)','Soft touch, high arc over big','15 makes'],['Right-hand floater (paint)','One-two step, sell the drive','15 makes'],['Standard layup L&R','High glass, correct footwork','10 each'],['Free throws — fresh legs','Groove the routine','30 makes']]},{t:'Ball handling — stationary',cls:'bl',lbl:'Handles',vol:'Timed',rows:[['Two-ball pound dribbles','Simultaneous then alternating','3 x 45s'],['Figure-8 between legs','Controlled then max speed','3 x 30s'],['Spider dribbles','Front and back','3 x 30s']]},{t:'Lower body lift',cls:'br',lbl:'Lift',vol:'',rows:[['Back squat','70-85% 1RM by phase','4 x 5'],['Romanian deadlift','Controlled eccentric','3 x 8'],['Glute-ham raise','3s lowering','3 x 6'],['Calf raises','Seated + standing','4 x 15']]}]},tue:{makes:[{v:60,l:'3pt',c:'#55dd88'},{v:80,l:'pull-up mid',c:'#6ab0f5'},{v:100,l:'off-dribble',c:'#ffaa33'},{v:30,l:'finishing',c:'#ff6655'},{v:30,l:'FTs',c:'#888'}],blocks:[{t:'Skill — off-dribble creation',cls:'bo',lbl:'Creation',vol:'300 makes',rows:[['Jab to pull-up mid-range','Sell the jab, quick gather','20 each side'],['Jab to crossover to pull-up','One dribble, fast decision','20 each side'],['DHO pull-up 3 L&R wing','One dribble off the hand-off','15 each'],['Step-back 3 both sides','Hard gather, load the step-back','15 each side'],['Fadeaway off one dribble both','Load back foot, balanced fade','15 each'],['Euro step finish both sides','Two-dribble attack, big step','10 each'],['Free throws after sprints','Simulate fatigue pressure','30 makes']]},{t:'Speed development',cls:'br',lbl:'Speed',vol:'~2,800m',rows:[['Dynamic warm-up + A/B skips','Jog 2x150m + drills','~400m'],['9m resisted sprint (sled)','Drive phase, heavy resistance','8 x 9m'],['18m acceleration sprint','Standing start, max effort','8 x 18m'],['T-drill court cones','~10m+5m+10m+5m, timed','8 x timed'],['5-10-5 pro agility shuttle','4.5m each direction, explosive COD','8 x timed'],['Lane shuffle 18m closeout','Shuffle paint width then burst','8 x each'],['Zigzag cone weave full court','Cones every 5m down 28m','6 x 28m'],['Court shuttle sprint retreat','28m sprint + 28m backpedal','6 x 56m']]}]},wed:{makes:[{v:90,l:'3pt',c:'#55dd88'},{v:60,l:'mid-range',c:'#6ab0f5'},{v:80,l:'off screens',c:'#ffaa33'},{v:40,l:'finishing',c:'#ff6655'},{v:30,l:'FTs',c:'#888'}],blocks:[{t:'Skill — off-screen & curl',cls:'bp',lbl:'Off screens',vol:'300 makes',rows:[['Curl off screen to 3','Momentum into shot, do not fade','20 each side'],['Flare off screen to 3','Push off screen hard, elevate','20 each side'],['Curl off screen to mid-range','Simulate pin-down, elbow J','20 each side'],['DHO hand-off to floater','Use the screen as cover','15 each side'],['Pro hop both sides','Two feet gather, power through','10 each'],['Reverse layup both sides','Use rim as shield on drives','10 each'],['Free throws','Mid-session routine check','30 makes']]},{t:'Ball handling — attack moves',cls:'bl',lbl:'Handles',vol:'Timed',rows:[['Cone weave crossover/hesitation/in-out','Game-speed combos','10 min'],['Behind-the-back pound','Low dribble, tight control','3 x 30s'],['Full-court dribble series','Game-speed both ends','10 min']]},{t:'Upper body lift',cls:'bl',lbl:'Lift',vol:'',rows:[['Bench press','Full range, controlled','4 x 6'],['Weighted pull-ups','+5-10kg after week 4','4 x 6'],['DB incline press','Upper chest emphasis','3 x 10'],['Single-arm DB row','Heavy, full retraction','3 x 10e'],['Band pull-aparts + face pulls','Shoulder health — mandatory','3 x 15']]}]},thu:{makes:[{v:120,l:'3pt',c:'#55dd88'},{v:80,l:'contested',c:'#6ab0f5'},{v:70,l:'pull-up/step-back',c:'#ffaa33'},{v:30,l:'FTs',c:'#ff6655'}],blocks:[{t:'Skill — contested & pressure',cls:'br',lbl:'Contested',vol:'300 makes',rows:[['Contested 3 closeout drill','Partner rushes, shoot the 3','30 each side'],['Step-back 3 both sides','One dribble, load the step-back','20 each side'],['Pull-up 3 off hesitation','Hesitate then burst, pull up at logo','15 each side'],['Contested mid-range elbow','Hand in face, hold the form','20 each side'],['Free throws after plyo block','Maximum fatigue, late game sim','30 makes']]},{t:'Vert / plyometric block',cls:'bo',lbl:'Plyo',vol:'',rows:[['Depth drops (shock method)','~45cm box, absorb only','4 x 5'],['Depth jump to max vert','~45cm box, step off, immediate','5 x 5'],['Single-leg bounding','Alternate legs, 20m runs','5 x 20m'],['Continuous broad jump','Land and immediately jump forward','4 x 5'],['Ankle stiffness hops','Minimal knee bend, rapid contact','4 x 20'],['Rim touches','Measure reach weekly','3 x 10']]},{t:'Lower body accessory',cls:'br',lbl:'Lift',vol:'',rows:[['Trap bar deadlift','Explosive concentric','4 x 4'],['Bulgarian split squat','Single leg power','3 x 8e']]}]},fri:{makes:[{v:80,l:'mid-range',c:'#6ab0f5'},{v:80,l:'3pt',c:'#55dd88'},{v:60,l:'finishing',c:'#ffaa33'},{v:50,l:'footwork',c:'#ff6655'},{v:30,l:'FTs',c:'#888'}],blocks:[{t:'Skill — footwork & finishing',cls:'bo',lbl:'Footwork',vol:'300 makes',rows:[['Jab-step crossover to layup','Sell jab, burst on cross','15 each side'],['Euro step finish both sides','Full speed, both hands','15 each side'],['Pro hop through contact','Use your body, not just ball','10 each side'],['Reverse layup both sides','Use rim as shield on drives','10 each side'],['Spot-up 3 — 5 spots around arc','8 makes per spot','40 makes'],['Pull-up mid off 2 dribbles','Realistic game rhythm','20 each side'],['Free throws end of session','High fatigue, locked-in routine','30 makes']]},{t:'Ball handling — combos',cls:'bl',lbl:'Handles',vol:'Timed',rows:[['Between-legs behind-back combo','Game-speed, no cones','5 x each side'],['In-and-out crossover combo','Extend first step on the cross','5 x each side']]},{t:'Full body lift',cls:'br',lbl:'Lift',vol:'',rows:[['Trap bar deadlift','Explosive concentric','4 x 4'],['Landmine press','Shoulder-safe pressing','3 x 12'],['Barbell row','Back thickness, heavy','4 x 6'],['Core circuit','Pallof press, dead bugs, anti-rotation','3 rounds']]},{t:'Game conditioning',cls:'bo',lbl:'Cond',vol:'~3,600m',rows:[['17s baseline-to-baseline','17 trips in 60s (476m/set), 30s rest','8 sets'],['Suicide runs','Baseline to 4.5m to 14m to 28m (~95m)','8 x ~95m'],['3-on-3 half-court live','High intensity, 90s rest between','6 x 4 min'],['Full-court 1v1','56m round trip, game moves only','14 possessions'],['Sprint finisher full court','28m sprint, walk back','10 x 28m'],['Half-court burst back-to-back','14m down + 14m back, 4 rounds','4 x 56m']]}]},sat:{makes:[{v:100,l:'game shots',c:'#55dd88'},{v:80,l:'spot-up 3s',c:'#6ab0f5'},{v:60,l:'finishing',c:'#ffaa33'},{v:30,l:'FTs',c:'#ff6655'}],blocks:[{t:'Skill — game simulation',cls:'bt2',lbl:'Game sim',vol:'300 makes',rows:[['5-on-5 scrimmage shots','All shots must be real game looks','~100 in play'],['Post-game spot-up 3s 5 spots','16 makes per spot around arc','80 makes'],['Post-game finishing','Layup package both hands game speed','60 makes'],['Cool-down free throws','2 at a time as in real games','30 makes']]},{t:'5-on-5 live scrimmage',cls:'bt2',lbl:'Live',vol:'~4,000m+',rows:[['Full-game scrimmage','Full game speed, no holding back','4 x 8 min'],['Off-ball movement','Cuts, screens, spacing reads','Throughout'],['Post-scrimmage sprint series','28m full court x 8, walk back','8 x 28m']]}]},sun:{rest:true}};
+
+/* ══════════════════════════════════════════
+   LIFTING DATA
+══════════════════════════════════════════ */
+var LD={
+mon:[
+  {t:'Lower body — power and strength',cls:'br',lbl:'Lower',vol:'~70 min',rows:[
+    ['Back squat','Wk 1-4: 70% 1RM · Wk 5-8: 80% · Wk 9-12: 85%+. No soft reps.','4 x 5','The floor is your enemy and you are trying to destroy it. Drive your knees out HARD from the bottom — not just when it gets heavy, every single rep. Chest stays tall. If your torso pitches forward at the bottom, the weight is too heavy or your ankle mobility is the problem. Brace before you unrack and hold that brace until the bar is back on the pins. Every rep like it is a max.'],
+    ['Pause squat','3 full seconds at the bottom. 60% 1RM. Non-negotiable.','3 x 4','Count the pause out loud — "one Mississippi, two Mississippi, three Mississippi." If you are rushing it, you are cheating the whole point. The pause kills the stretch-reflex and forces your legs to generate force from zero. This is harder than it looks and it directly builds the explosive bottom strength that makes you impossible to sit on in the post.'],
+    ['Romanian deadlift','3s controlled descent. Feel every centimetre of the stretch.','3 x 8','Hips back, not down. The bar traces your legs the entire way — if it swings away from your body you have lost tension. You should feel a deep pull through your entire hamstring. If you do not, your knees are bending too much. Keep your spine a rigid plank from your neck to your tailbone throughout.'],
+    ['Trap bar deadlift','Every rep explosive. Dead stop between reps — no bounce.','4 x 4','Stand centred in the bar. Grip the handles hard. Before you pull, take a full breath into your belly and brace like you are about to take a punch. Push the floor away — do not pull the bar up. These are four separate explosions, not a set of four. If rep 4 looks like rep 1, you went too light.'],
+    ['Bulgarian split squat','Slow down, explosive up. Rear foot on bench, front heel drives.','3 x 8 each','Your front foot needs to be far enough forward that your shin is near-vertical at the bottom — otherwise all the load shifts to your quad and off your glute. This should burn in your glute and hamstring. If it is only in your quad, move your foot further forward. Do not let your torso collapse. Drive up through your front heel like you are trying to leave a footprint in the floor.'],
+    ['Nordic curl (no partner version — door anchor)','Anchor feet under a heavy door or loaded barbell. Slow descent.','3 x 5','This is the most effective hamstring injury prevention exercise in existence — NBA teams make their players do it every session. Anchor your feet under something immovable. Lower yourself as slowly as physically possible — target 6-8 seconds going down. Catch yourself with your hands. The eccentric is the whole workout. Do not try to pull yourself back up yet — just lower.'],
+    ['Calf raises — seated','2s pause at the bottom in the full stretch. Full ROM up.','4 x 15','The seated position isolates your soleus — the deep calf muscle that controls ankle stiffness. Ankle stiffness is one of the three biggest determinants of how high you jump. Pause for 2 full seconds at the bottom stretch — that is where the adaptation happens. Go slow on these.'],
+    ['Calf raises — standing (single leg)','Full range, no shortcuts. Add weight when 15 reps is easy.','4 x 15 each','Single leg forces each calf to work independently. All the way up on your toes and all the way down into a full stretch — no half reps. When you can do 15 with bodyweight and it feels easy, hold a dumbbell. Weak calves are the most common and most fixable reason shooting guards cannot improve their vert.'],
+    ['Tibialis raise','Heels on a raised surface, toes up as high as possible.','3 x 20','Stand with your heels on a weight plate or step edge. Lift your toes toward your shins as high as they will go. Hold for 1 second. This is ignored by almost everyone and is one of the reasons people get shin splints and plateau on their vert. The tibialis anterior stabilises your ankle on every landing — train it.']
+  ]},
+  {t:'Core — anti-rotation, stability and carry',cls:'bo',lbl:'Core',vol:'',rows:[
+    ['Pallof press — half-kneeling','Cable or band at chest height. Press and hold 2s.','3 x 12 each','The cable or band is trying to rotate you — your job is to not let it. If your hips are shifting or your torso is rotating even slightly, the weight is too heavy. Half-kneeling forces your hip to stabilise at the same time. Press the handle out, hold for a full 2 seconds, bring it back. Breathe out on the press.'],
+    ['Dead bug','Lower back pressed FLAT into the floor before you start.','3 x 10 each','If your lower back leaves the floor at any point, the rep does not count. Move opposite arm and leg simultaneously, slowly. Go to the point just before your back lifts — that is your current range. Build it over weeks. This is the foundation of every change of direction you make on the court.'],
+    ['Ab wheel rollout','Roll out until your back is about to arch. Not past that.','3 x 8','The point at which your lower back starts to arch is your current limit. Go to that point and no further. Over weeks your limit will extend. If you are just rolling out as far as possible with a banana-back, you are wasting your time and loading your spine badly.'],
+    ['Copenhagen plank','Top foot on bench, bottom leg in the air.','3 x 20s each','Side plank with your top foot on a bench. Lift your bottom leg off the floor. This trains your adductors — the groin muscles — which are the most commonly torn muscles in basketball. Do not skip this. If it is too hard, let your bottom knee rest on the floor until you build strength.'],
+    ['Suitcase carry','One heavy dumbbell, walk without leaning toward it at all.','3 x 30m each','Carry a heavy dumbbell in one hand and walk 30m without your torso tilting toward the weight. This is lateral core strength — it directly improves your ability to hold your position on contact and resist being knocked off your cut. Go heavy. If it feels easy, you are leaning.']
+  ]}
+],
+tue:null,
+wed:[
+  {t:'Upper push — strength',cls:'bl',lbl:'Push',vol:'',rows:[
+    ['Bench press — controlled, paused','1s pause on chest weeks 1-6. Bar touches, does not bounce.','4 x 6','Grip the bar as hard as you possibly can — white knuckles. Pull it apart as if you are trying to bend the bar. This engages your chest and tris far more than a loose grip. Elbows 45 degrees — not flared to 90, not tucked to zero. The pause on your chest kills the elastic energy and forces your muscles to actually press the weight. Do not take shortcuts on this.'],
+    ['DB incline press','30-45 degree incline. At the top, rotate pinkies in.','3 x 10','Lower the dumbbells under control — 2-3 seconds down. At the top, rotate your pinkies slightly inward to get the last bit of chest contraction. The incline should not be steep — steep becomes a shoulder press. Control the descent completely. Do not just drop the weights and bounce them back up.'],
+    ['Push press','Dip your knees slightly, drive your legs, then press.','4 x 4','This is not a strict press — it is a power transfer drill. The leg drive starts the bar moving and your arms take over above your head. This trains the exact kinetic chain you use when you fight through contact or jump for a rebound. Lock out fully at the top. Do not let the bar crash back down — lower it with control.'],
+    ['Dips — full depth','Until upper arms are parallel to the floor. Every rep.','3 x 8','Lean slightly forward to shift emphasis to your chest and triceps rather than just triceps. Full range of motion — if your upper arms are not reaching parallel, you are shortchanging the stretch. When bodyweight becomes genuinely easy, add a dip belt with plates. Strong triceps make your shot release faster under fatigue.'],
+    ['Overhead DB press — seated, strict','Back supported. No leg drive. Brace before every rep.','3 x 10','This is strict pressing — no momentum. Take a full breath and brace before each rep. Do not arch your lower back to get the weight up. That is not pressing, that is loading your spine. Lock out at the top without shrugging. Strong overhead pressing protects your shoulders over a long season.']
+  ]},
+  {t:'Upper pull — strength',cls:'bl',lbl:'Pull',vol:'',rows:[
+    ['Weighted pull-ups — dead hang every rep','+5kg after week 4. Dead hang start. Chin over bar.','4 x 6','Start from a dead hang — shoulders relaxed, arms fully extended. Initiate the pull by driving your elbows DOWN toward your hips, not by pulling with your hands. This activates your lats instead of your biceps. Chin clears the bar every rep. If you are kipping, the weight is too heavy or your ego is too big.'],
+    ['Single-arm DB row — heavy','Elbow drives to your back pocket. Full retraction at top.','3 x 10 each','Do not lift the weight up — drive your elbow toward your back pocket. There is a difference and you will feel it. At the top, your shoulder blade should be fully retracted toward your spine. Hold for 1 second. Do not rotate your torso to get the weight up. Keep your hips square.'],
+    ['Barbell row (Pendlay) — bar resets on floor','Explosive concentric from dead stop. Back parallel to floor.','4 x 6','The bar starts on the floor every single rep — this is not a partial range row. Pull explosively to your lower chest. Your back should be close to horizontal. If your torso is pulling upright to swing the bar, the weight is too heavy. The eccentric should be controlled — do not drop the bar.'],
+    ['Face pulls — external rotation focus','Pull to your face, thumbs finish behind your ears.','3 x 15','Set the cable or band at face height. Pull directly to your nose, then separate your hands to drive your thumbs behind your ears. If your thumbs cannot get behind your ears, the weight is too heavy — your external rotators are not strong enough yet. This is the exercise that keeps your shoulders healthy. Do not rush it. Do not go heavy.'],
+    ['Dead hang — shoulder decompression','Full relaxation. Shoulders rise to ears. Breathe.','3 x 30s','After heavy pressing and pulling, hang from a bar and let everything go. Your shoulders should rise up toward your ears in full relaxation. This decompresses the shoulder joint and builds grip strength simultaneously. 30 seconds of doing nothing is the whole point.']
+  ]},
+  {t:'Shoulder health — mandatory, never skip',cls:'bg',lbl:'Shoulder',vol:'',rows:[
+    ['Band pull-aparts — horizontal','Pull until your hands are behind your body. Light band.','3 x 20','This exercise is not for strength — it is for shoulder health. Use a light band. Pull it apart until your hands are clearly behind your body and squeeze your shoulder blades together hard at the end position. If you are struggling to get your hands behind your body, the band is too heavy. This should be easy — the value is in the volume and the end-range contraction.'],
+    ['Side-lying external rotation','2-5kg maximum. Lying on your side. Full range.','3 x 15 each','Lie on your side, elbow bent at 90 degrees, forearm pointing at the floor. Rotate your forearm up toward the ceiling as far as it will go. That is the full range for your rotator cuff. Do not load this movement heavily — ever. These are small muscles doing precision work. Heavy loads on external rotation is how people tear their cuff. Light, controlled, full range.'],
+    ['Prone Y-T-W raises — bodyweight or 2kg plates','Face down on a bench or floor. Slow, controlled.','2 x 8 each','Lie face-down. For Y: raise both arms up at a diagonal forming a Y. For T: straight out to the sides. For W: elbows bent, pull them back and up like rowing. Each position targets a different part of your lower trap and rear delt. Move slowly — if you are using momentum, drop the weight. These muscles stabilise your shoulder on every shot you take.'],
+    ['Wrist roller','Roll the weight all the way up and all the way down.','3 x full','This is the most direct grip and forearm endurance exercise you can do. It directly translates to dribbling through contact and protecting the ball in traffic. The burn in your forearms tells you it is working. Do not stop when it burns — that is exactly when you keep going.']
+  ]}
+],
+thu:[
+  {t:'Vert and plyometrics — ground contact time is everything',cls:'bo',lbl:'Plyo',vol:'',rows:[
+    ['Depth drops — absorb only, no jump','Step off a 40-45cm box. Stiff landing. Zero counter-movement.','4 x 5','Step off — do not jump off. The moment your feet hit the ground, STOP. No bend into a squat, no counter-jump. You are training your nervous system to produce maximum stiffness on landing. This makes your tendons more elastic. The adaptation takes weeks — trust the process. If your knees are bending more than slightly, you are not doing this correctly.'],
+    ['Depth jump to max vert','Step off box. The moment you touch the ground, explode.','5 x 5','Ground contact time is the metric. The shorter it is, the more powerful the jump. Touch and GO — there should be zero pause on the ground. Swing your arms aggressively upward — arm drive adds 5-10cm to your vert. Every single rep is maximum effort. If you are saving yourself for the next rep, you are wasting your time.'],
+    ['Single-leg depth jump','Same rules. One foot landing. Immediate explosion.','3 x 5 each','Harder than double-leg. This trains the single-leg power you need when you drive to the rim off one foot. Land on a slightly bent knee — enough to absorb, not enough to load into a squat — and explode immediately. If you are wobbling on landing, the box is too high.'],
+    ['Continuous broad jump — no pause','Land and immediately go. Zero pause between jumps.','4 x 5','Two-foot takeoff every time. The landing position is your takeoff position — absorb and reload in one movement. Your arms swing back as you land and drive forward as you jump. Think of your legs as springs, not levers. If you are pausing between jumps, you are turning it into a strength exercise, not a power exercise.'],
+    ['Single-leg bounding — maximum distance','Drive your knee up hard. Maximum distance per bound.','5 x 20m','This is horizontal plyometric power — the same force you generate when you accelerate past a defender. Drive your free knee up aggressively to hip height on every bound. Your arms punch opposite to your legs. Focus on maximum distance per bound, not speed. Cover the 20m in as few bounds as possible.'],
+    ['Pogo hops — stiff ankle, minimal knee bend','Spring from your ankles only. Knees barely move.','4 x 20','This is the most direct ankle stiffness drill there is. Your knees should barely bend — all the spring comes from your calves and achilles. The faster your ground contact, the better. If your ground contact sounds like a thud, you are landing too flat-footed. Aim for a clicking sound — that is elastic energy, not absorbed energy.'],
+    ['Rim touches — 10 consecutive max jumps','Measure your reach every week. Write it down.','3 x 10','Jump to your absolute maximum every rep. No warm-up reps, no saving yourself. Rest 90 seconds between sets. Your weekly peak is your vert progress marker. If you are not improving week over week, your training is insufficient or your recovery is poor. Track it. The number does not lie.']
+  ]},
+  {t:'Lower body accessory',cls:'br',lbl:'Lower',vol:'',rows:[
+    ['Trap bar deadlift — explosive, dead stop every rep','Reset between every rep. No touch-and-go.','4 x 4','Reset your setup between every single rep — feet, grip, brace, then pull. The explosion is the point. If any rep grinds, you went too heavy. Rest 3 minutes between sets. These should be fast, violent, and technically perfect every time.'],
+    ['Bulgarian split squat — slow down, fast up','3s descent, explosive drive off front heel.','3 x 8 each','The eccentric is where you build the quad and glute strength. The explosive concentric is where you build the power. Separate them deliberately. Three seconds down, pause briefly at the bottom, then drive up as fast as possible off your front heel. The contrast between slow and fast is the whole training stimulus.'],
+    ['Step-up to knee drive','Step up onto a box, drive opposite knee to chest at top.','3 x 10 each','The box should be high enough that your thigh is near-parallel when you step up. At the top of the movement, drive the non-working knee up hard toward your chest. This mimics the running and cutting mechanics you use every possession. Do not push off your back foot — all the drive comes from the front leg.'],
+    ['Hip thrust — single leg, pause at top','Squeeze and hold 2 full seconds at full extension.','3 x 10 each','Drive through one heel only. At the top your body should form a straight line from your shoulder to your knee. Squeeze your glute as hard as possible and hold for 2 full seconds. If you feel this in your hamstring more than your glute, your foot is too far away from your body. Move it closer.']
+  ]},
+  {t:'Core — rotational power',cls:'bo',lbl:'Core',vol:'',rows:[
+    ['Med ball slam — full extension, maximum force','Reach all the way up. Slam as hard as physically possible.','4 x 8','Reach up on your toes at full extension before the slam — that is the stretch. Then accelerate the ball into the floor as hard as you can. Do not ease into it. The slam should make a sound that echoes. Chase the ball down and catch the bounce immediately. This trains the explosive downward force of rebounding and boxing out.'],
+    ['Med ball rotational throw — wall','Hips rotate first. Arms are just the delivery system.','4 x 8 each','Stand 1-1.5m from the wall. The throw starts from your hips — rotate hard, then your torso, then your arms. If your arms are leading the movement, you have it wrong. This trains the rotational chain of a chest pass under pressure, a post spin, or fighting through a screen. Catch and immediately throw back.'],
+    ['Cable woodchop — high to low','Hip rotation drives the movement, not your arms.','3 x 12 each','Set the cable high. Pull diagonally down across your body. The rotation comes from your torso and hips — your arms just transmit it. Keep your feet planted and pivot on your back heel. This directly mimics the body mechanics of a hard jab step, a crossover, or a spin move. Go heavy enough that the rotation requires real effort.'],
+    ['Hanging leg raise — straight legs','Pull your legs up. Do not swing them up.','3 x 15','Straight legs, controlled movement. Pull your legs up using your hip flexors — if you are swinging and using momentum, bend your knees until you are strong enough for straight legs. Hold at the top for 1 second. Lower slowly. This is hip flexor and lower abdominal strength — both critical for explosive first-step speed.']
+  ]}
+],
+fri:[
+  {t:'Upper push — heavier than Wednesday',cls:'bl',lbl:'Push',vol:'',rows:[
+    ['Bench press — no pause, heavier load','Go heavier than Wednesday. Use a spotter. No excuses.','4 x 5','Same technique cues as Wednesday — grip hard, pull apart, elbows 45 degrees — but heavier. This is your strength day. The weight should feel genuinely challenging on rep 4 and 5. If reps 1-5 all feel the same, you went too light. Use a spotter so you can push to a real effort level without the fear of getting buried.'],
+    ['Close-grip bench press','Hands just inside shoulder width. Elbows stay close.','3 x 8','This shifts the load to your triceps, which are the primary lockout muscles in your shot and your finishing moves through contact. Keep your elbows from flaring — they should travel at roughly 30-45 degrees from your torso. Full lockout at the top. Strong triceps are the difference between getting your shot off clean and getting it blocked.'],
+    ['Weighted dips — full depth','Add a plate when bodyweight is genuinely easy.','3 x 8','Upper arms must reach parallel to the floor on every rep. Lean slightly forward throughout to keep chest involvement. If you are not going to depth, you are not getting the full stretch and you are not building the strength. Add weight when 3 sets of 8 full-depth reps feel controlled and easy — not before.'],
+    ['Overhead carry — dumbbell pressed overhead, walk','One or both dumbbells pressed overhead. Core is the target.','3 x 30m','Press the dumbbell overhead and walk. Your core works harder to keep you upright and stable than in almost any other exercise. Ribs down — do not arch your back to get under the load. This builds the total-body stability you need to absorb contact without losing balance.']
+  ]},
+  {t:'Upper pull — heavier than Wednesday',cls:'bl',lbl:'Pull',vol:'',rows:[
+    ['Weighted pull-ups — heavier than Wednesday','Load the dip belt. Dead hang every rep. No kipping.','4 x 5','More weight than Wednesday. Same standards — dead hang start, drive elbows to hips, chin clears the bar. If the extra weight means you cannot maintain form, drop the weight. Strength built with bad form is not real strength — it is a compensation pattern that will limit you and eventually injure you.'],
+    ['Barbell shrug — heavy, controlled','Shrug straight up. Hold 1 second at the top.','3 x 12','Do not roll your shoulders — that loads your AC joint in a bad position and does nothing extra for your traps. Straight up, hold, controlled descent. Go heavy. Big traps improve your contact strength, your ability to fight through screens, and your ability to protect the ball with your body.'],
+    ['Meadows row — loaded stretch on the lat','Stand perpendicular to the barbell. Row to your hip.','3 x 10 each','The arc of movement gives you a deep stretch at the bottom — do not rush through that stretch. The stretch is where the muscle grows. Row the weight to your hip, not your chest. This builds lat thickness and width which improves your ability to shield the ball and hold position on cuts.'],
+    ['Bicep curl — EZ bar, full ROM','All the way down to full extension. All the way up.','3 x 12','The bicep connects the shoulder to the forearm — it plays a role in every catch, every dribble protection, every contested finish. Full range of motion every rep — not the short-range pumping that most people do. Keep your elbows pinned at your sides. Do not swing.']
+  ]},
+  {t:'Full body power',cls:'br',lbl:'Full',vol:'',rows:[
+    ['Trap bar deadlift — heaviest of the week','This is your max effort lift. Treat it that way.','4 x 4','Warm up properly — work up in sets. The working sets should be the heaviest trap bar pulls of your week. Rest 3-4 full minutes between sets. Add 2-5kg every 2-3 weeks. If you are not getting stronger, your recovery is the problem — sleep, nutrition, or stress. Track your weights.'],
+    ['Hang power clean — triple extension, fast elbows','From just above knees. Drive hips through, shrug, catch.','4 x 3','This is the most athletic power movement in the gym. Start from just above your knees. Drive your hips through explosively, shrug hard, then pull your elbows up and around fast. Catch in a quarter squat. The whole movement is one violent chain — not three separate actions. This directly trains the triple extension of jumping. Do not rush the learning — technique first, load second.'],
+    ['Farmers carry — heavy, both hands','Walk tall, shoulders back. If you are leaning, it is too heavy.','3 x 30m','Go as heavy as possible while maintaining perfect posture. Shoulders back and down, eyes forward, core tight. This builds grip endurance, trap strength, and full-body stability simultaneously. If you are wobbling or your grip is failing before 30m, use lighter weights. Grip failure before 30m means your hands are the weak link — fix that.'],
+    ['Sled push — stay low, drive hard','Hips below shoulders. Push through the floor not the sled.','4 x 30m','Stay low — your hips must be below your shoulder line. Drive through your legs on every step. This is one of the highest-quality power-building exercises for athletes — zero eccentric stress means you can train hard and recover fast. If the sled is moving easily, add weight. This should feel like a sprint, not a walk.']
+  ]},
+  {t:'Core — finisher',cls:'bo',lbl:'Core',vol:'',rows:[
+    ['Pallof press — standing, both sides','Resist rotation. Hold 2s at full extension.','3 x 12 each','Standing version is harder than kneeling — your hips now have to resist rotation too. Breathe out as you press. The 2-second hold is mandatory. This is not a warm-up exercise — it is a strength exercise. Go heavy enough that holding position requires real effort.'],
+    ['Ab rollout — no back arch','Only go to the point where your back stays flat.','3 x 8','Your limit is wherever your lower back starts to arch. That is your current range. Go to that point, pause, return. Over weeks you will roll further out. If you are doing full flat extensions from day one with a perfect arch, you are cheating. The flat back is the whole exercise.'],
+    ['Cable woodchop — low to high','Upward rotational drive. Same chain as shooting.','3 x 12 each','Start low, pull diagonally up across your body. The rotation is through your torso — your arms follow. This is the upward rotation pattern of your jump shot, your pump fake, and your contested release. Keep your feet planted and let your hips drive the movement.']
+  ]}
+],
+sat:null,sun:null};
+
+/* ══════════════════════════════════════════
+   CONDITIONING DATA
+══════════════════════════════════════════ */
+var CD={
+mon:null,
+tue:[
+  {t:'Dynamic warm-up — do not skip this',cls:'bg',lbl:'Warm-up',vol:'10 min',rows:[
+    ['Jog 2 full court lengths — progressive','50% first length, 70% second. Loosen everything up.','2 x 28m','Cold muscles on sprints is how you pull a hamstring. Two lengths is not a lot — it is the minimum. By the end you should feel loose and your breathing should be slightly elevated. If you are still cold after two lengths, do a third.'],
+    ['High knees — full court','Drive knees to hip height. Fast feet. Arms working.','2 x 28m','Arms pump opposite to legs and do not cross your body. Your foot strikes directly under your hip, not in front of it. Stay on the balls of your feet the entire length. If you are landing heel-first you are doing it wrong and loading your shins badly.'],
+    ['A-skip — full court','Knee drives to hip height with a skip. Coordinated arm drive.','2 x 28m','The skip is a rhythm exercise — not a jump. Drive the knee up to hip height on the skip, land on the ball of the opposite foot. Arms punch forward and back. Slow it down until the coordination is right before you build speed.'],
+    ['Lateral shuffle — full court','Low stance. Feet never cross. Change direction at every baseline.','2 x 28m','Get low — knees bent, hips back, weight on the balls of your feet. The lower you are, the more effective this is. Touch each baseline with your hand, not just your foot. This warms up the exact muscles and movement patterns you are about to use.'],
+    ['Leg swings — 10 each direction each leg','Forward/back then lateral. Hold a wall.','10 each leg','Swing the free leg through its full natural range of motion. Relax your hip — do not force the range. Forward/back opens your hip flexors. Lateral opens your adductors and abductors. Both are critical before the lateral sprint work that follows.']
+  ]},
+  {t:'Acceleration — maximum effort every rep',cls:'br',lbl:'Speed',vol:'~25 min',rows:[
+    ['9m explosion — standing start','Mark 9m with a shoe or court line. Dead stop start.','10 x 9m','This is the most important sprint distance for basketball — the first step and the drive phase. Stay low on takeoff, lean forward at 45 degrees, and do not pop upright before 9m. Drive your arms back hard — your legs follow your arms. Walk the full 9m back between every rep. Full recovery is not optional — you are training speed, not fatigue.'],
+    ['18m acceleration — standing start','18m marks exactly where you reach top speed.','8 x 18m','First 9m is your drive phase, second 9m is peak velocity. You should be at absolute maximum speed when you cross the 18m mark. Walk back every rep. By rep 6 you will want to ease up — that is exactly when you do not. Time these with your phone if you can. Improvement should be visible by week 4.'],
+    ['Lateral shuffle + sprint combo','Shuffle 5m, plant off outside foot, explode into 18m sprint.','8 x each direction','This is a defensive rotation drill. The shuffle is your positioning movement, the plant is the moment you read the play, and the sprint is your response. The plant off the outside foot must be a hard stop — not a gradual lean. If you are drifting into the sprint instead of exploding, you are doing it wrong.'],
+    ['Backpedal to sprint — transition drill','Backpedal 9m, plant, explode forward 18m.','8 reps','Backpedal under full control — do not just fall backward. When your foot hits the line, plant hard and drive forward as violently as possible. The transition from backpedal to sprint is where defenders get beaten on fast breaks. Train it until it is a reflex.'],
+    ['Zigzag sprint — use court lane lines','Sprint diagonally from one lane edge to the other, full court.','6 x full court','Attack every line — plant hard off the outside foot and explode to the next line. Do not drift or round the corners. This trains change-of-direction speed at full velocity. Each touch is a planting rep. By the time you reach half court your legs will be burning — keep your form and keep attacking.'],
+    ['T-drill — use court markings','Sprint to FT line, shuffle to lane edge, shuffle across, back.','8 x timed','Use the free-throw lane as your T. Sprint from baseline to the near FT lane line, shuffle left to the lane edge, shuffle all the way across the lane, shuffle back to centre, then sprint or backpedal back to baseline. Time every rep. Do not cross your feet on the shuffle. Track your weekly best — you should improve every week for the first 8 weeks.']
+  ]},
+  {t:'Speed targets — track these weekly',cls:'br',lbl:'Targets',vol:'',rows:[
+    ['T-drill — weeks 1-4','Sub-10.5s. Use court lane lines as markers.','Base'],
+    ['T-drill — weeks 5-8','Sub-10.0s. Every rep maximum effort.','Build'],
+    ['T-drill — weeks 9-12','Sub-9.5s. This is elite shooting guard speed.','Peak'],
+    ['18m sprint — weeks 1-4','Sub-2.8s. Drive phase must be violent.','Base'],
+    ['18m sprint — weeks 5-8','Sub-2.6s. Acceleration through the full distance.','Build'],
+    ['18m sprint — weeks 9-12','Sub-2.5s. Max velocity before 12m.','Peak'],
+    ['If you are not improving','You are either recovering poorly or coasting on reps. Pick one and fix it.','Non-negotiable']
+  ]},
+  {t:'Cool-down — this is not optional',cls:'bg',lbl:'Recovery',vol:'10 min',rows:[
+    ['Easy jog — 2 lengths','Flush lactic acid. Breathe through your nose.','2 x 28m'],
+    ['Hip flexor lunge stretch','Deep lunge, rear knee on floor, press hip forward.','2 x 60s each','The most important stretch after sprint work. Your hip flexors fire on every acceleration rep and stay shortened after. Get into a deep lunge — rear knee on the floor — and drive your hip forward. Hold for a full 60 seconds. Do not rush it. Both sides every time, no exceptions.'],
+    ['Pigeon pose','Rear shin parallel to your front, lean forward until you feel it.','2 x 60s each','Bring one knee forward, shin diagonally on the floor. Lower your hips toward the floor. This hits the piriformis and deep glute — tight glutes are a major contributor to hamstring pulls. Hold for a full 60 seconds. If you cannot get flat, support yourself on your elbows until your hips open up over the weeks.'],
+    ['Hamstring stretch — seated, single leg','Leg straight, reach toward your foot and hold.','2 x 45s each','Do not bounce. After 30 seconds the hamstring will begin to relax — lean slightly further in at that point. Tight hamstrings are the most common injury precursor in any sprint-heavy training programme. This stretch takes two minutes total. Skipping it is how you end up in physio.'],
+    ['Calf stretch — wall, both positions','Straight leg then bent leg. Two different muscles.','2 x 45s each','Straight leg stretches your gastrocnemius. Bent knee at the same position stretches your soleus. Both need to be done after sprinting. Press your heel actively into the floor on both variations. Two minutes total — do not skip either position.']
+  ]}
+],
+wed:null,
+thu:null,
+fri:[
+  {t:'Warm-up',cls:'bg',lbl:'Warm-up',vol:'8 min',rows:[
+    ['Progressive jog — 4 court lengths','Each length faster than the last. Last one at 80%.','4 x 28m'],
+    ['Dynamic leg swings — both planes','Forward/back and lateral. 10 each side.','10 each'],
+    ['Lateral shuffle — 2 court lengths','Low, fast, no crossed feet.','2 x 28m'],
+    ['3 build-up strides','50%, 70%, 90% effort. One length each.','3 x 28m']
+  ]},
+  {t:'17s baseline drill — the standard',cls:'br',lbl:'17s',vol:'8 sets',rows:[
+    ['17 trips — baseline to baseline','Each trip = one 28m length. 17 trips total. Touch every baseline.','Target sub-60s','Touch both baselines with your hand — not your foot, not a lean. Do not slow down on trips 12-17. That is the entire point of this drill — the last five trips when your lungs are screaming and your legs are gone are the ones that build your conditioning. Walk 30-45 seconds between sets. Do not sit. Do not stop moving. Week 1-4: 65s. Week 5-8: 60s. Week 9-12: sub-56s.']
+  ]},
+  {t:'Suicides — every line with your hand',cls:'br',lbl:'Suicides',vol:'8 reps',rows:[
+    ['Full suicide — baseline to all 4 lines and back','Baseline → FT line → half court → far FT → far baseline','8 x ~95m','Every line gets touched with your hand. Every single one. No exceptions, no shortcuts. If you miss a line, that rep does not count — do it again. Rest 35-45 seconds between reps. By rep 5 your legs will feel like concrete. Run rep 6, 7, and 8 anyway. This is exactly what builds the engine that keeps you effective in the fourth quarter.']
+  ]},
+  {t:'Solo game conditioning — no partner needed',cls:'bo',lbl:'Game Cond',vol:'~25 min',rows:[
+    ['Full court sprint — attack the rim','Sprint 28m as if you are beating your defender on a break.','10 x 28m','This is not a fitness jog — it is a fast break. Sprint at absolute maximum speed and finish with a jump stop or layup footwork at the far end. Walk back. Reps 7, 8, 9, 10 are the ones that count. If the last four reps look the same as the first four, you did not go hard enough on the early ones.'],
+    ['Half-court burst — sprint there and back','14m sprint, touch half court, immediate 14m sprint back.','8 x 28m','No rest between the two 14m legs. That is one rep. 45 seconds between reps. This trains the offensive and defensive transition — push on a break, immediately recover when the ball turns over. The transition from forward sprint to immediate sprint back is where most players lose their man. Train the transition.'],
+    ['Defensive sprint retreat','Sprint 28m forward, plant hard, sprint 28m back.','6 x 56m','The plant at the far baseline must be a hard stop and drive, not a jog around. This is your transition defence. Sprint back on every turnover — no exceptions. Walk back after the 56m. 30 seconds rest. Your defender is already sprinting back. You cannot afford to jog.'],
+    ['Free throw under fatigue — solo pressure drill','Walk to the line after every sprint set. Shoot 2 FTs now.','After every set','You do not get to rest before shooting free throws in games. Walk straight to the line, catch your breath on the line, and shoot. Make both before you move on. If you miss either one, add one sprint before the next set. Every game-winning free throw you will ever take gets shot when you are exhausted and your heart rate is 170. Practice it exactly that way.'],
+    ['Sprint finisher — empty the tank','10 x 28m. Walk back only. No excuses. No slowing down.','10 x 28m','You have done the 17s and the suicides and the game conditioning. Now you sprint 10 more. These are the reps your conditioning is actually built on. Reps 1-6 you will manage. Reps 7-10 are where most people stop — that is exactly where you do not. If you stop early, you are choosing to be less fit than the person you are competing against for a roster spot.']
+  ]},
+  {t:'Volume targets — phase by phase',cls:'bo',lbl:'Volume',vol:'',rows:[
+    ['Weeks 1-4 — base','6 x 17s (65s target), 6 x suicides, 45s rest','~5,800m/session'],
+    ['Weeks 5-8 — build','8 x 17s (sub-60s), 8 x suicides, 35s rest','~7,200m/session'],
+    ['Weeks 9-12 — peak','8 x 17s (sub-56s), 8 x suicides, 30s rest','~8,400m/session'],
+    ['If you miss the time target','Do the full set count anyway. Fitness comes from volume first, speed second.','Non-negotiable'],
+    ['If you miss a session','Add the 17s sets to Saturday before skill work. No exceptions.','Make it up']
+  ]},
+  {t:'Cool-down',cls:'bg',lbl:'Recovery',vol:'12 min',rows:[
+    ['Easy jog — 3 lengths','Slow and deliberate. Let your heart rate drop gradually.','3 x 28m'],
+    ['Static quad stretch','Stand on one leg, heel to glute, hold the wall.','2 x 60s each'],
+    ['Seated hamstring stretch','Legs straight, reach to toes, hold.','2 x 60s each'],
+    ['Hip flexor lunge stretch','Deep lunge, rear knee down, press hip forward.','2 x 60s each','After 17s and suicides your hip flexors are fully contracted and shortened. 60 seconds minimum on each side. Do not rush this — it is the difference between walking in normally on Monday and walking in stiff and limited.'],
+    ['Calf wall stretch — straight then bent knee','Both positions. Both muscles.','2 x 45s each'],
+    ['Foam roll or water bottle — quads, IT band, calves','Slow passes, pause 20s on every tight spot.','5 min']
+  ]}
+],
+sat:[
+  {t:'Warm-up',cls:'bg',lbl:'Warm-up',vol:'10 min',rows:[
+    ['Progressive jog — 4 court lengths','Each length faster. Last one at 80%.','4 x 28m'],
+    ['Dynamic circuit','Leg swings, hip circles, lateral lunges, arm circles.','5 min'],
+    ['Build-up strides — 3 lengths','50%, 70%, 90%. Each one faster than the last.','3 x 28m']
+  ]},
+  {t:'Aerobic base — continuous work',cls:'bt2',lbl:'Endurance',vol:'~35 min',rows:[
+    ['Court perimeter continuous run — 20 minutes','One perimeter is ~84m. Keep running the entire 20 minutes.','20 min','Set a timer and keep moving. This is not a sprint session — steady state aerobic work at 65-75% of your max heart rate. You should be able to speak in short sentences but not sing. If you need to slow down to keep going for the full 20 minutes, slow down. The rule is you do not stop. Stopping is not an option.'],
+    ['Pyramid sprints — solo, no cones needed','14m, 28m, 42m, 28m, 14m. That is one complete pyramid.','5 sets','Sprint 14m (to FT line), walk back. Sprint 28m (to half), walk back. Sprint 42m (1.5 courts), walk back. Sprint 28m, walk back. Sprint 14m, walk back. One pyramid = five sprints. Rest 60 seconds between pyramids. The 42m sprint is where people cheat. Do not.'],
+    ['Lateral shuffle endurance — no stopping','Shuffle full court and back without stopping once.','6 x full court','This is endurance, not agility. Keep your stance low and your feet moving for the entire length. When your legs start burning and you want to stand up, stay low. Standing up is the easy option. Your defender does not stand up when they are tired.'],
+    ['Transition drill — sprint, backpedal, sprint','Sprint 14m, plant, backpedal 14m, plant, sprint 28m.','6 reps','The plant between each phase must be a hard stop — not a gradual direction change. Sprint to half court, plant, backpedal to FT line, plant, sprint full court. 45 seconds rest. This is one full possession cycle — push in transition, retreat on the turnover, sprint back on the next break.'],
+    ['Continuous FT drill — shoot under fatigue','Sprint one court length, walk to FT line, shoot 2 FTs.','10 rounds','Go straight from the sprint to the line. Do not wait for your heart rate to drop. Shoot your full routine — feet set, same breath, same motion. Make both before you walk back. If you miss either, sprint back instead of walking. This is the most basketball-specific conditioning drill in this programme. Every late-game FT you take will be shot at this heart rate.']
+  ]},
+  {t:'Endurance finisher',cls:'bo',lbl:'Finisher',vol:'~10 min',rows:[
+    ['8 x court sprints — walk back only','Full 28m sprint. Walk back. No jogging the recovery.','8 x 28m','You have been going for 35 minutes. Now you sprint 8 more. Walk the recovery — the walk is your only rest, so actually walk and recover. If you jog back you are shortchanging the sprint. Reps 6, 7, 8 are the ones that build your engine.'],
+    ['4 x slow suicides — flush work','Full suicide, 80% effort. Touch every line.','4 x ~95m','These are not full-speed — they are flushing work. But touch every line. Volume and mental toughness at the end of a hard session. Rest 45 seconds between reps.'],
+    ['20 free throws — full routine, no shortcuts','These are the last 20 makes of your week.','20 makes','Your legs are gone, your focus is fading. Shoot anyway. Full pre-shot routine on every single one — the same footwork, the same breath, the same release. If you rush your routine because you are tired, you are training yourself to have a bad routine when the game is on the line. These 20 makes matter as much as any of the 300 you shot earlier.']
+  ]}
+],
+sun:null
+};
+
+/* ══════════════════════════════════════════
+   SHARED HELPERS
+══════════════════════════════════════════ */
+function renderBlocks(arr){var h='';for(var i=0;i<arr.length;i++){var bl=arr[i];h+='<div class="bc"><div class="bh"><div class="bhl"><span class="bdg '+bl.cls+'">'+bl.lbl+'</span><span class="btl">'+bl.t+'</span></div>'+(bl.vol?'<span class="bvl">'+bl.vol+'</span>':'')+'</div>';for(var j=0;j<bl.rows.length;j++){var r=bl.rows[j];var hasTip=r.length>3&&r[3];var uid='tip_'+i+'_'+j;if(hasTip){h+='<div class="er ht" data-uid="'+uid+'">';}else{h+='<div class="er">';}h+='<div><div class="en">'+r[0]+'</div><div class="eno">'+r[1]+(hasTip?' <span class="tg" id="tg_'+uid+'">+ tip</span>':'')+'</div></div>';h+='<div class="es">'+r[2]+'</div></div>';if(hasTip){h+='<div class="tiprow" id="'+uid+'"><div class="tipbox">'+r[3]+'</div></div>';}}h+='</div>';}return h;}
+
+function tog(uid){var el=document.getElementById(uid);var tg=document.getElementById('tg_'+uid);if(!el)return;var isOn=el.classList.contains('on');el.classList.toggle('on',!isOn);if(tg)tg.textContent=isOn?'+ tip':'- tip';}
+document.addEventListener('click',function(e){var row=e.target;while(row&&!row.classList.contains('ht')){row=row.parentElement;}if(row&&row.dataset&&row.dataset.uid){tog(row.dataset.uid);}});
+
+function setActive(selector,activeId){var all=document.querySelectorAll(selector);for(var i=0;i<all.length;i++)all[i].classList.remove('on');document.getElementById(activeId).classList.add('on');}
+
+function goTab(id,btn){var ps=document.querySelectorAll('.pnl');for(var i=0;i<ps.length;i++)ps[i].classList.remove('on');var ns=document.querySelectorAll('.nt');for(var i=0;i<ns.length;i++)ns[i].classList.remove('on');document.getElementById('pnl-'+id).classList.add('on');btn.classList.add('on');document.getElementById('scroll').scrollTop=0;}
+
+function goDay(k){setActive('#pnl-sched .db','d-'+k);var d=SD[k];var body=document.getElementById('daybody');if(!d||d.rest){body.innerHTML='<div class="rc"><div class="rt">Full recovery day</div><div class="rtx">No structured training. 8-9 hours sleep, light walking, 4L hydration, foam rolling.</div></div>';return;}var h='';if(d.makes){h+='<div class="mrow">';for(var i=0;i<d.makes.length;i++){var m=d.makes[i];h+='<div class="mc"><div class="mv" style="color:'+m.c+'">'+m.v+'</div><div class="ml">'+m.l+'</div></div>';}h+='</div>';}h+=renderBlocks(d.blocks);body.innerHTML=h;}
+
+function goLift(k){setActive('#pnl-lift .db','l-'+k);var body=document.getElementById('liftbody');var d=LD[k];if(!d){body.innerHTML='<div class="rc"><div class="rt">No lifting today</div><div class="rtx">Rest and recover. Sleep, nutrition and mobility work only.</div></div>';return;}body.innerHTML=renderBlocks(d);}
+
+function goHandles(k){setActive('#pnl-handles .db','h-'+k);var body=document.getElementById('handlesbody');var d=HD[k];if(!d||d.rest){body.innerHTML='<div class="rc"><div class="rt">Full recovery day</div><div class="rtx">No structured training. 8-9 hours sleep, light walking, 4L hydration, foam rolling.</div></div>';return;}body.innerHTML=renderBlocks(d);}
+
+function initHandles(){goHandles('mon');}
+
+function goCond(k){
+  setActive('#pnl-cond .db','c-'+k);
+  var body=document.getElementById('condbody');
+  var d=CD[k];
+  if(!d){
+    body.innerHTML='<div class="rc"><div class="rt">No conditioning today</div><div class="rtx">Active recovery only. Light walking, mobility, foam rolling. Do not add extra work here — this rest is part of the programme.</div></div>';
+    return;
+  }
+  body.innerHTML=renderBlocks(d);
+}
+
+/* ══════════════════════════════════════════
+   INIT
+══════════════════════════════════════════ */
+goDay('mon');
+goLift('mon');
+goCond('tue');
+initHandles();
+</script>
+</body>
+</html>
