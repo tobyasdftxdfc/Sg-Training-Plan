@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -92,19 +93,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0d0d12;
 .td{font-size:12px;line-height:1.5}
 .note{font-size:12px;color:#7a7a8c;line-height:1.6;margin:0 16px 14px;background:#18181f;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 13px}
 
-
 </style>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff8c00">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<meta name="mobile-web-app-capable" content="yes">
-<script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load',function(){
-    navigator.serviceWorker.register('./sw.js').catch(function(e){console.log('SW error:',e)});
-  });
-}
-</script>
 </head>
 <body>
 <div id="hdr">
@@ -127,6 +116,7 @@ if('serviceWorker' in navigator){
 <div id="scroll">
 
 <!-- ═══════════════ SCHEDULE ═══════════════ -->
+
 <div id="pnl-sched" class="pnl on">
   <div class="sl">Select day</div>
   <div class="dgrid">
@@ -142,6 +132,7 @@ if('serviceWorker' in navigator){
 </div>
 
 <!-- ═══════════════ CONDITIONING ═══════════════ -->
+
 <div id="pnl-cond" class="pnl">
   <div class="sl">Select day</div>
   <div class="dgrid">
@@ -157,6 +148,7 @@ if('serviceWorker' in navigator){
 </div>
 
 <!-- ═══════════════ LIFTING ═══════════════ -->
+
 <div id="pnl-lift" class="pnl">
   <div class="sl">Select day</div>
   <div class="dgrid">
@@ -172,6 +164,7 @@ if('serviceWorker' in navigator){
 </div>
 
 <!-- ═══════════════ HANDLES ═══════════════ -->
+
 <div id="pnl-handles" class="pnl">
   <div class="sl">Select day</div>
   <div class="dgrid">
@@ -187,6 +180,7 @@ if('serviceWorker' in navigator){
 </div>
 
 <!-- ═══════════════ MACROS ═══════════════ -->
+
 <div id="pnl-macros" class="pnl">
   <div class="sl">Daily targets</div>
   <div class="mgrid">
@@ -418,6 +412,63 @@ sun:null
 };
 
 /* ══════════════════════════════════════════
+   HANDLES DATA
+══════════════════════════════════════════ */
+var H_FOUND={t:'Foundations — stationary dribbling',cls:'bl',lbl:'Foundation',vol:'Daily · 15 min',rows:[
+  ['Two-ball pound — simultaneous','Both balls hit the floor at the same time','3 x 45s','Keep both balls at waist height. Eyes forward — never down at your hands. Start comfortable and build speed over the 45 seconds. Trains both hands simultaneously and forces your weak hand to match your strong.'],
+  ['Two-ball pound — alternating','One ball hits as the other leaves the floor','3 x 45s','More coordination than same-time. Think of it as a drumbeat — consistent rhythm. Your weak hand will want to slow down. Do not let it. Speed is secondary to consistency.'],
+  ['Two-ball low dribble','Both balls 6-8 inches off the ground','3 x 30s','Get low — bend your knees and get your body down to the ball. Low dribbles are harder to steal and force serious hand strength and forearm endurance. This is where handles are built.'],
+  ['Spider dribbles','Front of feet then back, rapid hand movements','3 x 45s','Both hands alternate: right front, left front, right back, left back — as fast as possible. Do not look at the ball. Builds pure hand-eye coordination and ambidexterity needed to protect the ball under pressure.'],
+  ['Stationary crossover — low','Cross ball from hand to hand at ankle height','4 x 30s','Get the ball as low to the ground as possible. The lower the cross, the harder it is to steal. Push the ball across rather than slapping it — control at every point.'],
+  ['Figure-8 between legs — stationary','Ball weaves between legs in a figure-8 pattern','3 x 45s','Start slow and build speed. Keep the ball low. Drills the coordination of moving the ball through your legs from any angle — essential for hesitations and protecting the ball in traffic.'],
+  ['Behind-the-back pound','Ball dribbled continuously behind your back','3 x 30s','Keep it low — not up to your shoulder blades. Both hands. This feels awkward at first but becomes natural quickly. Essential for behind-the-back crossovers in traffic.'],
+  ['Windmill dribble','Ball circles around your body continuously','2 x 30s each direction','Dribble in a big circle around your body. Build speed over time. Warm-up and coordination drill — not a game move, but builds feel for the ball at all angles.']
+]};
+var H_COMBOS={t:'Footwork + handle combos — moving',cls:'bo',lbl:'Combos',vol:'Daily · 20 min',rows:[
+  ['Cone weave — crossover at every cone','5 cones, crossover before each one','5 x full','Set cones 2-3m apart. Attack each cone like a defender is on you. Crossover low and quick. Change pace: slow into the cone, explosive out. Simulates attacking gaps.'],
+  ['Hesitation — one hand, full court','Dribble full court, pause hard every 5m, burst again','4 x full','The hesitation must be convincing — if your defender does not freeze, it does not count. Pause completely upright for 1 full second then burst. The bigger the contrast, the more effective.'],
+  ['In-and-out crossover — moving','Fake cross, push ball back to same hand','4 x full','The fake must sell the cross. Dip your shoulder and shift your weight as if crossing, then snap the ball back and drive the other way. Footwork and shoulder movement sell the fake — not your hand.'],
+  ['Between-legs — moving (dominant)','Dribble through legs on every stride','4 x full','Every step through with your dominant hand. This should become automatic — a rhythm not a decision. Left foot → ball through legs → right foot → repeat. Build to game speed.'],
+  ['Between-legs — moving (weak hand)','Same drill, weak hand dominant','4 x full','This will feel unnatural. Slow down until the movement is clean, then build speed. The goal is to make your weak hand feel identical to your dominant. This takes weeks — stay patient.'],
+  ['Behind-the-back on every stride','Full court, behind-the-back each step','4 x full','One of the hardest dribble drills. Start with half court. The ball must come cleanly behind your back to the other hand with every step. Builds elite court vision — you have no choice but to look forward.'],
+  ['Crossover series into attack','Cross, between legs, behind back, then go','5 x each side','Three-move combo then attack the basket. Moves must be low and quick. Slow into the combo, fast out of it. Finish with a layup or pull-up.'],
+  ['Chair drill — attack and retreat','Dribble at chair, retreat, attack again, repeat','3 x 60s each hand','The chair is a passive defender. Attack at full speed, stop before contact, retreat backward, attack again. Change your move on every attack. Builds the control to attack and retreat without losing the ball.']
+]};
+var H_WEAK={t:'Weak hand specialisation',cls:'br',lbl:'Weak Hand',vol:'Daily · 10 min',rows:[
+  ['Weak hand only — full court','Do not touch the ball with your dominant hand','5 x full court','Walk first if you need to. The only way to build a reliable weak hand is to use it exclusively in practice until it becomes comfortable. Do not go back to your dominant hand when it gets difficult.'],
+  ['Weak hand finishing — layups','Both angles, weak hand only','20 makes','Standard and reverse layup from both sides — weak hand only. Correct footwork: two-step into the layup, push off the inside foot. Release off your fingertips, not your palm.'],
+  ['Weak hand pull-up off one dribble','One dribble to the weak side, pull up','15 makes','Attack with one dribble to the weak side and pull up. Start close to the basket and move back as you improve. Make this feel as natural as your strong side.'],
+  ['Weak hand floater','Drive baseline, float over imaginary big','15 makes','Drive baseline and release a floater with your weak hand. High arc, soft touch. The weak-hand floater is the most neglected shot in a SG\'s game and the one that gets the most buckets in traffic.'],
+  ['Two-ball — weak hand only pounding','Strong hand still, weak hand dribbles','3 x 30s','Hold the ball in your strong hand completely still. Dribble with your weak hand as fast and as low as you can. Forces your weak hand to work without any reliance on your strong hand.'],
+  ['Wall dribble — weak hand','Stand 30cm from wall, rapid weak-hand dribbles','3 x 30s','The close wall forces you to control the ball exactly or it bounces back. Start at chest height, build to lower dribbles. The most direct way to tighten up a sloppy weak hand.']
+]};
+var H_ATTACK={t:'Attack moves — full speed game application',cls:'bg',lbl:'Attacks',vol:'Daily',rows:[
+  ['Two-dribble left-right crossover','Two hard dribbles each side, low cross, attack','5 x each side','Two dribbles to set up the defender, then a hard low crossover and attack. The two dribbles must look like you are going somewhere — then the cross catches the defender leaning. Attack with your first step after the cross.'],
+  ['Shake and bake combo','Crossover — between legs — behind back — go','5 x each direction','Three-move sequence at speed. Every move must be low and convincing. The combination of three different looks forces defenders to react to each one. The last move is the real attack, the first two are the setup.'],
+  ['Euro step dribble approach','Two dribbles then euro step left or right','5 x each','Use your dribble to build speed, then plant and step the opposite direction. The step must be long and decisive. Work the entry, not just the step.'],
+  ['Retreat dribble to crossover attack','Retreat 3 steps, crossover, burst forward','5 x each hand','The retreat dribble resets the defender. Cross low and hard immediately after the retreat, then attack. Change of direction from backward to forward at full speed is one of the hardest things for a defender to handle.'],
+  ['Hesitation to step-back','Hesitation, fake one way, step back for 3','5 x each side','The hesitation sells the drive, then you pull back for the three. Gather off two feet on the step-back. This should look identical to your drive hesitation until the very last moment.'],
+  ['Snake dribble into pull-up','Weave between 3 defenders or chairs, pull up','5 x each entry','Requires changing direction multiple times under control. Attack the first gap, re-cross through the second, pull up at the third. Simulates attacking in traffic — keep dribbling through contact and still get your shot.']
+]};
+var H_PRESSURE={t:'Handle tightening — control and pressure',cls:'bp',lbl:'Pressure',vol:'4 days/wk',rows:[
+  ['Towel dribble','Dribble with a small towel over your hand','3 x 60s each hand','The towel reduces feel and control, forcing your hand and fingers to work harder. When you remove the towel, the ball feels easier to control. Used by players like Steph Curry in development. Use a thin hand towel.'],
+  ['Tennis ball dribble — weak hand','Dribble a tennis ball with your weak hand only','3 x 60s','The smaller size forces more precise fingertip control. When you go back to a basketball it feels enormous and easy. Walk the court while doing this — the movement coordination makes it harder.'],
+  ['Dribble while seated','Sit on the floor, dribble both sides','3 x 60s each','Without legs and body momentum, all control must come from your hand and arm. Isolates hand strength and feel. Dribble low — the ball should barely leave the floor.'],
+  ['Eyes closed — stationary','Close your eyes, dribble for full duration','3 x 30s each hand','You must rely entirely on touch and feel. Builds the unconscious hand-eye coordination that lets you look at the floor without actually looking at it. Start with your dominant hand until you trust it, then switch.'],
+  ['Pressure gauntlet — partner slaps away','Partner tries to knock ball away while you dribble','3 x 60s','A partner continuously tries to slap the ball out. Keep the ball low and protect it with your body. Simulates the contact defenders create. Your response should be to get lower, not move the ball higher.'],
+  ['Full-court — eyes up only','Cone at half court, no looking at ball at all','5 x full','You are not allowed to look at the ball the entire length of the court. Look at the cone, the back wall, then the rim. Forces your handle to become unconscious — which is where it needs to be in games.']
+]};
+var HD={
+  mon:[H_FOUND,H_COMBOS,H_WEAK,H_ATTACK,H_PRESSURE],
+  tue:[H_FOUND,H_COMBOS,H_WEAK,H_ATTACK,H_PRESSURE],
+  wed:[H_FOUND,H_COMBOS,H_WEAK,H_ATTACK],
+  thu:[H_FOUND,H_COMBOS,H_WEAK,H_ATTACK,H_PRESSURE],
+  fri:[H_FOUND,H_COMBOS,H_WEAK,H_ATTACK,H_PRESSURE],
+  sat:[H_FOUND,H_COMBOS,H_WEAK,H_ATTACK],
+  sun:{rest:true}
+};
+
+/* ══════════════════════════════════════════
    SHARED HELPERS
 ══════════════════════════════════════════ */
 function renderBlocks(arr){var h='';for(var i=0;i<arr.length;i++){var bl=arr[i];h+='<div class="bc"><div class="bh"><div class="bhl"><span class="bdg '+bl.cls+'">'+bl.lbl+'</span><span class="btl">'+bl.t+'</span></div>'+(bl.vol?'<span class="bvl">'+bl.vol+'</span>':'')+'</div>';for(var j=0;j<bl.rows.length;j++){var r=bl.rows[j];var hasTip=r.length>3&&r[3];var uid='tip_'+i+'_'+j;if(hasTip){h+='<div class="er ht" data-uid="'+uid+'">';}else{h+='<div class="er">';}h+='<div><div class="en">'+r[0]+'</div><div class="eno">'+r[1]+(hasTip?' <span class="tg" id="tg_'+uid+'">+ tip</span>':'')+'</div></div>';h+='<div class="es">'+r[2]+'</div></div>';if(hasTip){h+='<div class="tiprow" id="'+uid+'"><div class="tipbox">'+r[3]+'</div></div>';}}h+='</div>';}return h;}
@@ -456,5 +507,6 @@ goLift('mon');
 goCond('tue');
 initHandles();
 </script>
+
 </body>
 </html>
